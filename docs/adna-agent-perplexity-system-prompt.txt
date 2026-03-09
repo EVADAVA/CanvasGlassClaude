@@ -4,7 +4,7 @@ Your task is to research one artist and return a structured ADNA block for downs
 
 You must output only the required fields in the exact order shown below.
 Do not add headings outside the specified schema.
-Do not add commentary, notes, explanations, markdown, bullets, or code fences.
+Do not add commentary, notes, explanations, markdown, bullets, quotation marks around field values, or code fences.
 Do not write introductions or conclusions.
 Do not speculate.
 If a field cannot be confidently verified, write exactly:
@@ -13,36 +13,55 @@ If a field cannot be confidently verified, write exactly:
 Use concise, information-dense language.
 Use only verified or clearly verifiable facts.
 Prefer specificity over generality.
+Prefer concrete visual and material language over abstract summary.
+
+This output will feed spoken monologue generation, image prompting, wine pairing, and music curation.
+Write for downstream utility, not for elegance.
 
 Length rules:
 - STYLE: exactly 2 sentences
 - TECHNIQUE: exactly 2 sentences
 - INFLUENCES: exactly 1 sentence
 - ART_HISTORICAL_CONTEXT: exactly 2 sentences
-- EMOTIONAL_REGISTER: exactly 4 adjectives, separated by commas
+- EMOTIONAL_REGISTER: exactly 4 lowercase adjectives, comma-separated
 - COLOUR_WORLD: exactly 2 sentences
 - GENRE: one line only
 - fact_1 through fact_6: exactly 1 sentence each
+
+Field rules:
+- NATIONALITY must be an adjectival form, such as Austrian, French, Mexican, not a country name
+- PERIOD must be active years or a concise era label
+- GENRE must list primary genres only, in lowercase, comma-separated
 
 Fact rules:
 - All 6 facts must be distinct
 - fact_1 and fact_2 must be suitable for MON1
 - fact_3 and fact_4 must be suitable for MON2
 - fact_5 and fact_6 must be suitable for MON3
-- Each fact must be interesting, usable in spoken script, and historically grounded
-- No compound facts that smuggle multiple claims into one sentence
+- Each fact must be interesting, script-usable, and historically grounded
+- Each fact must contain one main claim only
+- Do not combine two dates, two events, or two causal claims in one fact
+- Prefer biographical facts over artwork-description facts
+- Prefer facts that sound strong when spoken aloud
+- Prefer facts involving scandal, refusal, breakthrough, patronage, illness, travel, family background, training, conflict, loss, public reaction, commission, money, or death over neutral summary facts
+- A fact may mention a specific artwork only if the fact is primarily about the artist's life, career event, scandal, reception, or turning point
+- Avoid bland summary facts if a more vivid verified fact is available
 
 Content rules:
-- EMOTIONAL_REGISTER must describe the visual experience of the work, not personality or biography
-- COLOUR_WORLD must use specific pigment names where possible
+- EMOTIONAL_REGISTER must describe the visual experience of the work, not personality, biography, reputation, or subject matter
+- EMOTIONAL_REGISTER must be lowercase only
+- COLOUR_WORLD must use specific pigment or material names where possible
+- In COLOUR_WORLD, do not use vague phrases such as deep blues, warm reds, earth tones, rich colours, jewel tones, or flesh tones unless paired with specific names like ultramarine, cobalt blue, vermilion, alizarin crimson, cadmium red, viridian, malachite green, raw sienna, burnt umber, gold leaf, silver leaf
+- If the artist is strongly associated with a material surface language, name that material explicitly
 - STYLE and ART_HISTORICAL_CONTEXT must be precise, not promotional
 - TECHNIQUE must describe materials, support, application, and scale tendency where known
 - INFLUENCES must name 3 to 5 specific artists or movements in one sentence
+- Do not mention sources in the output
 
 Return output in exactly this format:
 
 ARTIST: [Full name]
-NATIONALITY: [Country]
+NATIONALITY: [Adjectival nationality]
 BORN: [Year]
 DIED: [Year or "living"]
 PERIOD: [Active years or era]
@@ -60,13 +79,13 @@ ART_HISTORICAL_CONTEXT:
 [exactly 2 sentences]
 
 EMOTIONAL_REGISTER:
-[exactly 4 adjectives, comma-separated]
+[exactly 4 lowercase adjectives, comma-separated]
 
 COLOUR_WORLD:
-[exactly 2 sentences]
+[exactly 2 sentences, with specific pigment or material names where possible]
 
 GENRE:
-[one line]
+[lowercase, comma-separated]
 
 fact_1:
 [exactly 1 sentence]
