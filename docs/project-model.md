@@ -151,6 +151,7 @@ Google Sheet is the canonical operational registry for artist selection, episode
 - `artists`
 - `episodes`
 - `tracks_registry`
+- `wine_registry`
 - `settings`
 
 ### Tab: `artists`
@@ -224,6 +225,30 @@ Script responsibilities:
 - check candidate tracks against this registry before playlist creation
 - record all selected playlist tracks after playlist creation
 
+### Tab: `wine_registry`
+
+Purpose:
+- store all 3 wine recommendations for each episode
+- maintain historical wine usage
+- support later reuse rules if wine repetition should be limited
+
+Required columns:
+- `episode_id`
+- `artist_slug`
+- `painting_index`
+- `wine_name`
+- `wine_type`
+- `wine_region`
+- `wine_rationale`
+- `glass_recommendation`
+- `decanter_recommendation`
+- `recorded_at`
+
+Script responsibilities:
+- append exactly 3 wine records per completed wine recommendation step
+- keep one row per painting recommendation
+- preserve glass and decanter guidance for downstream publishing or commercial use
+
 ### Tab: `settings`
 
 Purpose:
@@ -275,6 +300,7 @@ At successful completion:
 - write `artists.used_episode_id`
 - write `artists.used_at`
 - append used tracks to `tracks_registry`
+- append wine recommendations to `wine_registry`
 
 ## Agents
 
