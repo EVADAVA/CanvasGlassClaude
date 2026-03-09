@@ -142,6 +142,140 @@ episodes/
 - any state can move to `failed` on unrecoverable processing error
 - any long-running user wait state can move to `paused` if intentionally suspended
 
+## Google Sheet Registry Model
+
+Google Sheet is the canonical operational registry for artist selection, episode tracking, settings, and track reuse control.
+
+### Required Tabs
+
+- `artists`
+- `episodes`
+- `tracks_registry`
+- `settings`
+
+### Tab: `artists`
+
+Purpose:
+- source queue for `Artist Name`
+- prevent artist reuse
+- allow controlled sequencing
+
+Required columns:
+- `artist_name`
+- `artist_slug`
+- `queue_order`
+- `is_used`
+- `used_episode_id`
+- `used_at`
+- `notes`
+
+Script responsibilities:
+- read the next unused artist by `queue_order`
+- derive or verify `artist_slug`
+- mark the artist as used only after successful episode creation or according to final business rule
+
+### Tab: `episodes`
+
+Purpose:
+- registry of all episode runs
+- current operational state for each episode
+
+Required columns:
+- `episode_id`
+- `artist_name`
+- `artist_slug`
+- `episode_status`
+- `started_at`
+- `updated_at`
+- `finished_at`
+- `input_dir`
+- `output_dir`
+- `assets_dir`
+- `render_dir`
+- `spotify_playlist_url`
+- `youtube_video_url`
+- `youtube_video_id`
+- `error_message`
+- `operator_notes`
+
+Script responsibilities:
+- create one row per episode
+- update `episode_status` on every state transition
+- store final YouTube URL and video ID after successful publish
+- write `error_message` on failure
+
+### Tab: `tracks_registry`
+
+Purpose:
+- prevent repeated use of the same Spotify tracks across episodes
+- maintain historical track usage
+
+Required columns:
+- `spotify_track_id`
+- `track_name`
+- `artist_name`
+- `album_name`
+- `used_episode_id`
+- `used_artist_slug`
+- `used_at`
+- `spotify_playlist_id`
+
+Script responsibilities:
+- check candidate tracks against this registry before playlist creation
+- record all selected playlist tracks after playlist creation
+
+### Tab: `settings`
+
+Purpose:
+- store runtime settings and reusable project configuration
+
+Required columns:
+- `key`
+- `value`
+- `scope`
+- `notes`
+
+Expected setting keys:
+- `episodes_root_dir`
+- `default_asmr_audio_path`
+- `youtube_privacy_default`
+- `default_video_duration_seconds`
+- `spotify_cover_count`
+- `painting_expected_count`
+- `telegram_admin_chat_id`
+
+Script responsibilities:
+- read settings at startup
+- fall back to local config only if a setting is intentionally absent
+
+### Recommended Selection Rule
+
+When Telegram starts a new run:
+
+1. read `settings`
+2. read `artists`
+3. select the first row where `is_used = false`
+4. create `episode_id`
+5. create episode folder tree
+6. insert new row in `episodes`
+7. continue processing
+
+### Recommended Update Rule
+
+At every major step, Script updates the matching row in `episodes`:
+
+- state change
+- important URLs
+- final outputs
+- failure details
+
+At successful completion:
+
+- set `artists.is_used = true`
+- write `artists.used_episode_id`
+- write `artists.used_at`
+- append used tracks to `tracks_registry`
+
 ## Agents
 
 ### ADNA Agent
