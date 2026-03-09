@@ -48,6 +48,100 @@ All filesystem paths must use `artist_slug`, not raw `artist_name`.
 13. `Script` renders the final 60-minute video.
 14. `Script` publishes the video to YouTube private state.
 
+## Episode Folder Layout
+
+```text
+episodes/
+  {artist_slug}/
+    input/
+      painting-1.jpg
+      painting-2.jpg
+      painting-3.jpg
+    output/
+      adna.txt
+      nb-prompt-1.txt
+      nb-prompt-2.txt
+      nb-prompt-3.txt
+      pd-text-1.txt
+      pd-text-2.txt
+      pd-text-3.txt
+      monologue-1.txt
+      monologue-2.txt
+      monologue-3.txt
+      monologue-4.txt
+      TYDescription.txt
+    assets/
+      qr-playlist.png
+      qr-painting-1.png
+      qr-painting-2.png
+      qr-painting-3.png
+      cover-1.png
+      cover-2.png
+      cover-3.png
+    render/
+      final-video.mp4
+```
+
+## Episode Status Model
+
+### Canonical Statuses
+
+- `queued`: artist has been selected from the registry and episode workspace has not started yet
+- `initializing`: Script is creating the episode workspace and loading base settings
+- `adna_ready`: `ADNA Agent` output is ready
+- `prompts_ready`: `NB Agent` output is ready and waiting for paintings
+- `awaiting_paintings`: Script is paused until 3 paintings appear in the episode input folder
+- `paintings_ready`: all 3 paintings are present and accepted for processing
+- `analysis_ready`: `PD-text-1..3` and wine recommendations are ready
+- `playlist_ready`: Spotify playlist, URL, QR, and 3 cover options are ready
+- `awaiting_cover_selection`: Script is paused until the user selects one playlist cover
+- `cover_selected`: one playlist cover has been approved
+- `monologues_ready`: all 4 monologues are ready
+- `youtube_package_ready`: `TYDescription.txt` and publish package are ready
+- `ready_for_render`: all required assets are present and Script is waiting for explicit render approval
+- `rendering`: ffmpeg render is in progress
+- `rendered`: final video file exists and passed basic output checks
+- `awaiting_publish_confirmation`: render is complete and Script is waiting for explicit publish approval
+- `publishing`: YouTube upload/publication is in progress
+- `published_private`: video has been published to YouTube private state
+- `completed`: episode is fully done and registry has been updated
+- `failed`: episode hit an unrecoverable error
+- `paused`: episode was intentionally paused outside the standard wait states
+
+### Expected State Flow
+
+1. `queued`
+2. `initializing`
+3. `adna_ready`
+4. `prompts_ready`
+5. `awaiting_paintings`
+6. `paintings_ready`
+7. `analysis_ready`
+8. `playlist_ready`
+9. `awaiting_cover_selection`
+10. `cover_selected`
+11. `monologues_ready`
+12. `youtube_package_ready`
+13. `ready_for_render`
+14. `rendering`
+15. `rendered`
+16. `awaiting_publish_confirmation`
+17. `publishing`
+18. `published_private`
+19. `completed`
+
+### Transition Rules
+
+- `awaiting_paintings -> paintings_ready` only after all 3 painting files are present
+- `playlist_ready -> awaiting_cover_selection` is mandatory if more than one cover option exists
+- `awaiting_cover_selection -> cover_selected` only after explicit user choice
+- `youtube_package_ready -> ready_for_render` only after all required assets are present
+- `ready_for_render -> rendering` only after explicit user confirmation
+- `rendered -> awaiting_publish_confirmation` is mandatory
+- `awaiting_publish_confirmation -> publishing` only after explicit user confirmation
+- any state can move to `failed` on unrecoverable processing error
+- any long-running user wait state can move to `paused` if intentionally suspended
+
 ## Agents
 
 ### ADNA Agent
@@ -120,8 +214,12 @@ Spotify is recommendation output only. It is not used as render audio.
 - `artist_name`
 - `artist_slug`
 - `episode_status`
+- `episode_started_at`
+- `episode_finished_at`
 - `input_dir`
 - `output_dir`
+- `assets_dir`
+- `render_dir`
 - `created_at`
 - `updated_at`
 - `sheet_registry_ref`
@@ -267,6 +365,7 @@ These require explicit human confirmation or selection.
 - `spotify_selected_cover`
 - `render_confirmation`
 - `publish_confirmation`
+- `selected_cover_index`
 
 ## Native Pause Points
 
