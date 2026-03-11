@@ -152,6 +152,7 @@ Google Sheet is the canonical operational registry for artist selection, episode
 - `episodes`
 - `tracks_registry`
 - `wine_registry`
+- `avatar`
 - `settings`
 
 ### Tab: `artists`
@@ -233,21 +234,57 @@ Purpose:
 - support later reuse rules if wine repetition should be limited
 
 Required columns:
-- `episode_id`
-- `artist_slug`
-- `painting_index`
-- `wine_name`
-- `wine_type`
-- `wine_region`
-- `wine_rationale`
-- `glass_recommendation`
-- `decanter_recommendation`
+- `episode`
+- `artist_name`
+- `wine1`
+- `wine2`
+- `wine3`
+- `wine1_description`
+- `wine2_description`
+- `wine3_description`
+- `wine1_type`
+- `wine2_type`
+- `wine3_type`
+- `wine1_region`
+- `wine2_region`
+- `wine3_region`
+- `wine1_producer`
+- `wine2_producer`
+- `wine3_producer`
+- `wine1_normalized_key`
+- `wine2_normalized_key`
+- `wine3_normalized_key`
 - `recorded_at`
 
 Script responsibilities:
-- append exactly 3 wine records per completed wine recommendation step
-- keep one row per painting recommendation
-- preserve glass and decanter guidance for downstream publishing or commercial use
+- append exactly 1 wine registry row per completed wine recommendation step
+- keep one row per episode
+- store all 3 final wine recommendations in the same row for downstream retrieval
+- preserve normalized helper fields so WAO can enforce anti-repeat logic reliably
+
+### Tab: `avatar`
+
+Purpose:
+- store episode-level narrative pattern decisions
+- maintain historical tone-of-voice usage
+- support anti-repetition rules for the Avatar layer
+
+Required columns:
+- `episode`
+- `artist_name`
+- `narrative_pattern_id`
+- `narrative_pattern_name`
+- `mon1_tone_variant`
+- `mon2_tone_variant`
+- `mon3_tone_variant`
+- `mon4_tone_variant`
+- `mon4_closing_mode`
+- `recorded_at`
+
+Script responsibilities:
+- append exactly 1 avatar row per completed monologue-generation step
+- keep one row per episode
+- preserve pattern and tone-path history so AAO can enforce anti-repeat logic reliably
 
 ### Tab: `settings`
 
@@ -268,6 +305,12 @@ Expected setting keys:
 - `spotify_cover_count`
 - `painting_expected_count`
 - `telegram_admin_chat_id`
+- `wine_repeat_kr`
+- `wine_repeat_history_depth`
+- `track_repeat_kr`
+- `track_repeat_history_depth`
+- `avatar_repeat_kr`
+- `avatar_repeat_history_depth`
 
 Script responsibilities:
 - read settings at startup
@@ -661,6 +704,7 @@ These rules apply to all 4 monologues without exception:
 - retention arc: move from tension to release to invitation
 - selling voice: sell an experience, not a product
 - voice: warm, unhurried Canadian English with slight wit
+- every monologue must include a smooth spoken transition into the next act of looking
 - variable slots are injected into fixed templates
 - target ratio: about 60 percent fixed template and 40 percent variable content
 
@@ -693,10 +737,13 @@ Mandatory variables:
 
 Assembly rules:
 - opening hook must be built from 2 interesting biography facts about the artist
+- hook fact and following biography lines must not duplicate the same claim
 - greeting copy must adapt to the selected narrative pattern
 - the wine recommendation must be selected from `Wine Agent` output with registry-based repetition control
 - the meditation entry must be a calming full-text passage, not a label or instruction stub
 - painting 1 description must originate from `pd_text_1` and then be rewritten through the selected narrative pattern
+- monologue must contain a soft handoff into looking at painting 1
+- playlist and wine blocks may vary in phrasing, but must retain all required information in spoken form
 - playlist QR mention must include top-right placement and 60-second visibility
 - sound invitation copy should encourage the viewer to turn on or attend to the soundscape
 
@@ -704,7 +751,8 @@ Assembly rules:
 
 Function:
 - opens session 2
-- reflects on painting 1 through the selected narrative pattern
+- uses only a short carry-over from painting 1 through the selected narrative pattern
+- prepares the viewer for the adjustment required by painting 2
 - explains the 3-session arc
 - recommends `wine_2`
 
@@ -718,6 +766,8 @@ Negative rules:
 - no academic art-history register
 - no instructions, only invitations
 - no technique discussion unless it serves emotional description
+- no long restatement of painting 1
+- the main descriptive energy should prepare perception for painting 2
 
 #### `monologue_3`
 
@@ -746,12 +796,24 @@ Function:
 - synthesizes all 3 sessions
 - reflects on painting 3
 - closes with return invitation
+- resolves through the selected narrative pattern rather than a fixed outro cadence
+- may include a calm support / acquisition invitation after gratitude
 
 Mandatory variables:
 - `an_description_painting_3`
 - `fact_5`
 - `fact_6`
 - `artist_name`
+- `monologue_4_tone_variant`
+
+Assembly rules:
+- closing synthesis must be rewritten through the selected narrative pattern
+- the return invitation must sound episode-specific rather than like a reusable subscribe block
+- gratitude should acknowledge shared presence with Alexander across the hour and the common meditative space
+- any commercial invitation should feel premium, understated, and deserved rather than pushy
+- `monologue_4` should vary cadence, intimacy, and emotional temperature across episodes
+- no hard summary-drop at the start of the final monologue
+- no mechanical reuse of the same closing formula across multiple artists
 
 ### Variable Injection Map
 
@@ -780,6 +842,7 @@ Mandatory variables:
 - `alexander_personal_reflection`
 - `monologue_1_tone_variant`
 - `sound_invitation_copy`
+- `monologue_4_tone_variant`
 
 ### Red Wine Trigger Rule
 
@@ -827,6 +890,39 @@ Required controls:
 - monologue-specific tone variation may still shift within the chosen narrative family
 - repetition quota for monologue tone variants: `20%`
 - lookback depth for monologue tone randomizer: last `10` episodes
+- the chosen pattern must remain stable across the episode
+- tonal motion across `monologue_1..4` is allowed and expected
+- tone motion must preserve the hour arc: entry -> adjustment -> pressure -> synthesis
+- closing cadences for `monologue_4` should be tracked and rotated to avoid template-feel recurrence
+
+### Narrative Pattern Recommender
+
+Before `Avatar Agent` generation, the system should recommend one base episode pattern.
+
+Inputs:
+- `adna_text`
+- `pd_text_1`
+- `pd_text_2`
+- `pd_text_3`
+
+Selection priority:
+- ADNA emotional register
+- emotional/material behavior of the 3 paintings
+- whether the triptych reads as sensual, devotional, melancholic, theatrical, resistant, or synthetic
+
+Output:
+- `narrative_pattern_id`
+- `narrative_pattern_name`
+- short justification
+- `monologue_1_tone_variant`
+- `monologue_2_tone_variant`
+- `monologue_3_tone_variant`
+- `monologue_4_tone_variant`
+
+Rule:
+- base pattern is recommended once per episode
+- monologue tone variants move inside that base pattern
+- tone variants are not allowed to become separate competing patterns
 
 This requires registry storage for:
 
@@ -838,6 +934,52 @@ This requires registry storage for:
 - `monologue_4_tone_variant`
 - `recorded_at`
 
+### Random Agent
+
+`Random Agent` is the internal selector that formalizes narrative variation before monologue generation.
+
+It sits between:
+- `ADNA Agent`
+- `Painting Describer Agent`
+- `Avatar Agent`
+
+Its job is not to write language.
+Its job is to select a stable episode-level pattern package.
+
+Inputs:
+- `episode_id`
+- `artist_name`
+- `adna_text`
+- `pd_text_1`
+- `pd_text_2`
+- `pd_text_3`
+- recent registry history
+
+Outputs:
+- `narrative_pattern_id`
+- `narrative_pattern_name`
+- `selection_justification`
+- `monologue_1_tone_variant`
+- `monologue_2_tone_variant`
+- `monologue_3_tone_variant`
+- `monologue_4_tone_variant`
+- `monologue_4_closing_mode`
+- `reuse_risk_note`
+
+Rules:
+- chooses exactly one base pattern per episode
+- the chosen pattern remains stable across the hour
+- tone movement is allowed only inside that pattern family
+- lookback window should cover at least the last `10` episodes
+- identical pattern reuse is discouraged
+- repeated MON4 closure cadences should be actively rotated
+- artistic fit outranks novelty pressure
+
+Operationally:
+- `Pattern Recommender` logic becomes the decision core of `Random Agent`
+- `Random Agent` is the canonical pre-monologue selector
+- `Avatar Agent` receives already-selected pattern + tone package
+
 ### Monologue Delivery Constraints
 
 - each monologue should target about 1 minute of spoken delivery
@@ -846,6 +988,7 @@ This requires registry storage for:
 - `monologue_2` must establish the arc: entry -> depth -> catharsis
 - `monologue_3` must feel most personal
 - `monologue_4` must introduce no new information
+- `monologue_4` must still feel unique in rhetorical shape even when informational inputs are similar
 
 ### Working Template Status
 
@@ -865,13 +1008,14 @@ Current readiness:
 
 ### NB Agent
 
-- input: `adna_text`
+- input: `adna_text`, `narrative_pattern`, `season`, optional `genre`
 - output: `nb_prompt_1..3`
 
 ### Painting Describer Agent
 
 - input: `painting_1..3`
 - output: `pd_text_1..3`
+- purpose: produce structured operational painting descriptions for wine, music, monologue, and commercial downstream use
 
 ### Wine Agent
 
@@ -884,15 +1028,28 @@ Current readiness:
 - input: `pd_text_1..3`
 - output: Spotify playlist, 3 cover options, playlist URL, playlist QR
 
+### Random Agent
+
+- input: `adna_text`, `pd_text_1..3`, recent episode registry
+- output: one episode-level narrative package
+- purpose: select one narrative pattern, four tone variants, and one MON4 closing mode while suppressing recent repetition
+
 ### Avatar Agent
 
 - input: project variables
 - output: `monologue_1..4`
+- narrative logic source: master monologue templates plus one selected episode-level narrative pattern
 
 ### Publisher Agent
 
 - input: project variables and content assets
 - output: `TYDescription.txt` and YouTube publication package
+
+### Painting QR Agent
+
+- input: `painting_1_store_url`, `painting_2_store_url`, `painting_3_store_url`
+- output: `painting_1_qr_path`, `painting_2_qr_path`, `painting_3_qr_path`
+- purpose: generate painting-specific QR assets before final render
 
 ## Modules
 
@@ -913,6 +1070,37 @@ The final video is built from:
 - gallery ASMR ambience under the full 60-minute video
 
 Spotify is recommendation output only. It is not used as render audio.
+
+### Render Timing Formula
+
+Episode timing comes from Google Sheet Settings:
+
+- `duration_1_min`
+- `duration_2_min`
+- `duration_3_min`
+
+Derived:
+
+- `duration_1_sec = duration_1_min * 60`
+- `duration_2_sec = duration_2_min * 60`
+- `duration_3_sec = duration_3_min * 60`
+- `episode_total_duration_sec = duration_1_sec + duration_2_sec + duration_3_sec`
+
+Canonical monologue timing:
+
+- `monologue_1_start_sec = 0`
+- `monologue_2_start_sec = duration_1_sec`
+- `monologue_3_start_sec = duration_1_sec + duration_2_sec`
+- `monologue_4_start_sec = duration_1_sec + duration_2_sec + duration_3_sec - 300`
+
+Interpretation:
+
+- MON1 occupies the first minute of Duration1
+- MON2 occupies the first minute of Duration2
+- MON3 occupies the first minute of Duration3
+- MON4 starts exactly 5 minutes before the end of Duration3
+
+If any rendered monologue crosses into a forbidden overlap zone, the system should flag a timing violation instead of silently stacking blocks.
 
 ## Entity Variables
 
@@ -938,6 +1126,14 @@ Spotify is recommendation output only. It is not used as render audio.
 - `updated_at`
 - `sheet_registry_ref`
 
+### Episode Settings
+
+- `duration_1_min`
+- `duration_2_min`
+- `duration_3_min`
+- `episode_total_duration_min`
+- `episode_total_duration_sec`
+
 ### ADNA Knowledge
 
 - `adna_text`
@@ -950,6 +1146,8 @@ Spotify is recommendation output only. It is not used as render audio.
 
 ### NB Prompt Set
 
+- `narrative_pattern`
+- `season`
 - `nb_prompt_1`
 - `nb_prompt_2`
 - `nb_prompt_3`
@@ -998,6 +1196,8 @@ Spotify is recommendation output only. It is not used as render audio.
 - `spotify_cover_option_3`
 - `spotify_selected_cover`
 - `spotify_playlist_qr_path`
+- `spotify_redirect_url`
+- `playlist_target_duration_min`
 
 ### Monologues
 
@@ -1050,6 +1250,13 @@ These are produced by agents or Script logic.
 - `adna_fact_1..6`
 - `nb_prompt_1..3`
 - `pd_text_1..3`
+- `narrative_pattern_id`
+- `narrative_pattern_name`
+- `monologue_1_tone_variant`
+- `monologue_2_tone_variant`
+- `monologue_3_tone_variant`
+- `monologue_4_tone_variant`
+- `monologue_4_closing_mode`
 - `wine_1_*`
 - `wine_2_*`
 - `wine_3_*`
@@ -1059,10 +1266,22 @@ These are produced by agents or Script logic.
 - `spotify_track_list`
 - `spotify_cover_option_1..3`
 - `spotify_playlist_qr_path`
+- `spotify_redirect_url`
 - `painting_1_qr_path`
 - `painting_2_qr_path`
 - `painting_3_qr_path`
 - `monologue_1_text..4`
+- `monologue_1_start_sec`
+- `monologue_2_start_sec`
+- `monologue_3_start_sec`
+- `monologue_4_start_sec`
+- `monologue_1_visible_end_sec`
+- `monologue_2_visible_end_sec`
+- `monologue_3_visible_end_sec`
+- `monologue_4_visible_end_sec`
+- `asmr_track_id`
+- `avatar_template_id`
+- `render_motion_profile`
 - `youtube_title`
 - `youtube_description`
 - `youtube_timestamps`

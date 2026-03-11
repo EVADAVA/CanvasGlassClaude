@@ -1,4 +1,5 @@
 .DS_Store
+**/.DS_Store
 
 # Environment files
 .env
@@ -7,6 +8,8 @@
 .env.test.local
 .env.production.local
 .env.*.local
+credentials.env
+tokens.json
 
 # Credentials and secrets
 *.pem
@@ -23,3 +26,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Generated renders and diagnostics
+output/
+
+# Local heavy source media kept outside git
+assets/audio/

@@ -1,0 +1,5 @@
+{
+  "reserved_routes_source": "../../docs/reserved_painting_routes.json",
+  "landing_pattern": "/paintings/<episode>_<painting>",
+  "reserved_count": 60
+}

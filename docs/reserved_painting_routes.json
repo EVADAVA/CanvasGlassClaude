@@ -1,0 +1,486 @@
+{
+  "title": "Canvas & Glass reserved painting landing routes",
+  "count": 60,
+  "routes": [
+    {
+      "slug": "001_1",
+      "episode": "001",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/001_1",
+      "qr_target_url": "https://links.evadava.com/paintings/001_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "001_2",
+      "episode": "001",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/001_2",
+      "qr_target_url": "https://links.evadava.com/paintings/001_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "001_3",
+      "episode": "001",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/001_3",
+      "qr_target_url": "https://links.evadava.com/paintings/001_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "002_1",
+      "episode": "002",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/002_1",
+      "qr_target_url": "https://links.evadava.com/paintings/002_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "002_2",
+      "episode": "002",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/002_2",
+      "qr_target_url": "https://links.evadava.com/paintings/002_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "002_3",
+      "episode": "002",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/002_3",
+      "qr_target_url": "https://links.evadava.com/paintings/002_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "003_1",
+      "episode": "003",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/003_1",
+      "qr_target_url": "https://links.evadava.com/paintings/003_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "003_2",
+      "episode": "003",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/003_2",
+      "qr_target_url": "https://links.evadava.com/paintings/003_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "003_3",
+      "episode": "003",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/003_3",
+      "qr_target_url": "https://links.evadava.com/paintings/003_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "004_1",
+      "episode": "004",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/004_1",
+      "qr_target_url": "https://links.evadava.com/paintings/004_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "004_2",
+      "episode": "004",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/004_2",
+      "qr_target_url": "https://links.evadava.com/paintings/004_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "004_3",
+      "episode": "004",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/004_3",
+      "qr_target_url": "https://links.evadava.com/paintings/004_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "005_1",
+      "episode": "005",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/005_1",
+      "qr_target_url": "https://links.evadava.com/paintings/005_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "005_2",
+      "episode": "005",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/005_2",
+      "qr_target_url": "https://links.evadava.com/paintings/005_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "005_3",
+      "episode": "005",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/005_3",
+      "qr_target_url": "https://links.evadava.com/paintings/005_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "006_1",
+      "episode": "006",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/006_1",
+      "qr_target_url": "https://links.evadava.com/paintings/006_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "006_2",
+      "episode": "006",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/006_2",
+      "qr_target_url": "https://links.evadava.com/paintings/006_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "006_3",
+      "episode": "006",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/006_3",
+      "qr_target_url": "https://links.evadava.com/paintings/006_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "007_1",
+      "episode": "007",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/007_1",
+      "qr_target_url": "https://links.evadava.com/paintings/007_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "007_2",
+      "episode": "007",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/007_2",
+      "qr_target_url": "https://links.evadava.com/paintings/007_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "007_3",
+      "episode": "007",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/007_3",
+      "qr_target_url": "https://links.evadava.com/paintings/007_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "008_1",
+      "episode": "008",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/008_1",
+      "qr_target_url": "https://links.evadava.com/paintings/008_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "008_2",
+      "episode": "008",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/008_2",
+      "qr_target_url": "https://links.evadava.com/paintings/008_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "008_3",
+      "episode": "008",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/008_3",
+      "qr_target_url": "https://links.evadava.com/paintings/008_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "009_1",
+      "episode": "009",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/009_1",
+      "qr_target_url": "https://links.evadava.com/paintings/009_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "009_2",
+      "episode": "009",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/009_2",
+      "qr_target_url": "https://links.evadava.com/paintings/009_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "009_3",
+      "episode": "009",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/009_3",
+      "qr_target_url": "https://links.evadava.com/paintings/009_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "010_1",
+      "episode": "010",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/010_1",
+      "qr_target_url": "https://links.evadava.com/paintings/010_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "010_2",
+      "episode": "010",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/010_2",
+      "qr_target_url": "https://links.evadava.com/paintings/010_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "010_3",
+      "episode": "010",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/010_3",
+      "qr_target_url": "https://links.evadava.com/paintings/010_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "011_1",
+      "episode": "011",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/011_1",
+      "qr_target_url": "https://links.evadava.com/paintings/011_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "011_2",
+      "episode": "011",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/011_2",
+      "qr_target_url": "https://links.evadava.com/paintings/011_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "011_3",
+      "episode": "011",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/011_3",
+      "qr_target_url": "https://links.evadava.com/paintings/011_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "012_1",
+      "episode": "012",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/012_1",
+      "qr_target_url": "https://links.evadava.com/paintings/012_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "012_2",
+      "episode": "012",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/012_2",
+      "qr_target_url": "https://links.evadava.com/paintings/012_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "012_3",
+      "episode": "012",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/012_3",
+      "qr_target_url": "https://links.evadava.com/paintings/012_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "013_1",
+      "episode": "013",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/013_1",
+      "qr_target_url": "https://links.evadava.com/paintings/013_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "013_2",
+      "episode": "013",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/013_2",
+      "qr_target_url": "https://links.evadava.com/paintings/013_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "013_3",
+      "episode": "013",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/013_3",
+      "qr_target_url": "https://links.evadava.com/paintings/013_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "014_1",
+      "episode": "014",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/014_1",
+      "qr_target_url": "https://links.evadava.com/paintings/014_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "014_2",
+      "episode": "014",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/014_2",
+      "qr_target_url": "https://links.evadava.com/paintings/014_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "014_3",
+      "episode": "014",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/014_3",
+      "qr_target_url": "https://links.evadava.com/paintings/014_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "015_1",
+      "episode": "015",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/015_1",
+      "qr_target_url": "https://links.evadava.com/paintings/015_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "015_2",
+      "episode": "015",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/015_2",
+      "qr_target_url": "https://links.evadava.com/paintings/015_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "015_3",
+      "episode": "015",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/015_3",
+      "qr_target_url": "https://links.evadava.com/paintings/015_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "016_1",
+      "episode": "016",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/016_1",
+      "qr_target_url": "https://links.evadava.com/paintings/016_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "016_2",
+      "episode": "016",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/016_2",
+      "qr_target_url": "https://links.evadava.com/paintings/016_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "016_3",
+      "episode": "016",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/016_3",
+      "qr_target_url": "https://links.evadava.com/paintings/016_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "017_1",
+      "episode": "017",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/017_1",
+      "qr_target_url": "https://links.evadava.com/paintings/017_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "017_2",
+      "episode": "017",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/017_2",
+      "qr_target_url": "https://links.evadava.com/paintings/017_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "017_3",
+      "episode": "017",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/017_3",
+      "qr_target_url": "https://links.evadava.com/paintings/017_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "018_1",
+      "episode": "018",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/018_1",
+      "qr_target_url": "https://links.evadava.com/paintings/018_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "018_2",
+      "episode": "018",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/018_2",
+      "qr_target_url": "https://links.evadava.com/paintings/018_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "018_3",
+      "episode": "018",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/018_3",
+      "qr_target_url": "https://links.evadava.com/paintings/018_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "019_1",
+      "episode": "019",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/019_1",
+      "qr_target_url": "https://links.evadava.com/paintings/019_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "019_2",
+      "episode": "019",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/019_2",
+      "qr_target_url": "https://links.evadava.com/paintings/019_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "019_3",
+      "episode": "019",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/019_3",
+      "qr_target_url": "https://links.evadava.com/paintings/019_3",
+      "status": "reserved"
+    },
+    {
+      "slug": "020_1",
+      "episode": "020",
+      "painting_index": 1,
+      "landing_url": "https://links.evadava.com/paintings/020_1",
+      "qr_target_url": "https://links.evadava.com/paintings/020_1",
+      "status": "reserved"
+    },
+    {
+      "slug": "020_2",
+      "episode": "020",
+      "painting_index": 2,
+      "landing_url": "https://links.evadava.com/paintings/020_2",
+      "qr_target_url": "https://links.evadava.com/paintings/020_2",
+      "status": "reserved"
+    },
+    {
+      "slug": "020_3",
+      "episode": "020",
+      "painting_index": 3,
+      "landing_url": "https://links.evadava.com/paintings/020_3",
+      "qr_target_url": "https://links.evadava.com/paintings/020_3",
+      "status": "reserved"
+    }
+  ]
+}

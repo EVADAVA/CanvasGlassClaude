@@ -63,9 +63,17 @@ Every prompt must produce:
 Always include:
 - no frame
 - no border
+- no painted border
+- no ornamental perimeter
+- no decorative edge band
+- no panel rim
 - no mat
 - no signature
 - no text
+
+The output must be cropped to the painted surface only.
+No visible outer support edge should read as a frame.
+No composition may create a false inner frame through repeated perimeter ornament.
 
 OMR-NB2 · NOT AN INSTALLATION SCENE
 The result must not look like a gallery interior or showroom image.
@@ -111,6 +119,7 @@ Every prompt must describe the painting as a physical object.
 Always specify:
 - centre paint handling
 - edge paint handling
+- whether edges dissolve, breathe, or stay open without forming a perimeter device
 - surface density
 - impasto / glaze / dry brush / exposed linen
 - metallic leaf if present
@@ -150,6 +159,7 @@ Do not generate:
 - iconic composition remake
 
 The work must feel informed by the artist's visual DNA, not derivative of a known painting.
+Do not let ornament lock into a rectangular enclosure that reads as a frame substitute.
 
 OMR-NB8 · COMMERCIAL STANDALONE STRENGTH
 Each painting must work both:
@@ -184,6 +194,8 @@ Function:
 - pressure
 - intensification
 - emotional deepening
+- reduced air
+- compressed spatial field
 
 PAINTING 3 · CATHARSIS
 Function:
@@ -196,7 +208,7 @@ PROMPT TEMPLATE
 
 Each prompt should follow this logic:
 
-Large-scale oil on linen painting, 16:9 horizontal composition, frontal full-canvas capture, camera plane parallel to the canvas, no frame, no border, no mat, no signature, no text.
+Large-scale oil on linen painting, 16:9 horizontal composition, frontal full-canvas capture, camera plane parallel to the canvas, tightly cropped to the painted surface only, no frame, no border, no painted border, no ornamental perimeter, no decorative edge band, no mat, no signature, no text.
 
 Professional gallery-grade artwork capture with museum-standard lighting, focused on surface legibility, pigment depth, and paint relief. Full-frame Sony mirrorless artwork capture, 50mm or 85mm prime lens, high-resolution frontal documentation.
 
@@ -211,12 +223,12 @@ Name specific pigments and material accents.
 
 [PAINT HANDLING]
 Centre - [dense / moderate / sculptural / compressed handling]
-Edges - [glaze / dry brush / exposed linen / thinned paint / breathing space]
+Edges - [glaze / dry brush / exposed linen / thinned paint / breathing space, with no enclosing band or frame illusion]
 
 [EMOTIONAL TIME]
 Use one temporal state appropriate to the session:
 - forms still arriving
-- pressing / the paint is weight
+- pressing / the paint is weight / air is reduced
 - the painting has gone through something and survived
 
 [SURFACE REALITY]
@@ -232,3 +244,126 @@ The final image must read as:
 - materially convincing
 - commercially strong
 - coherent with the triptych arc
+
+INPUT INTERPRETATION RULES
+
+Interpret the input block in this order of authority:
+1. TECHNIQUE
+2. STYLE
+3. COLOUR_WORLD
+4. EMOTIONAL_REGISTER
+5. INFLUENCES
+6. GENRE
+7. NARRATIVE_PATTERN
+8. SEASON
+
+If STYLE and INFLUENCES conflict, preserve the artist's material logic from TECHNIQUE first.
+If GENRE is broad or weak, treat it as a soft bias, not a hard subject command.
+If COLOUR_WORLD is sparse, expand only with historically plausible pigments and materials.
+If EMOTIONAL_REGISTER is vague, convert it into concrete spatial and surface behavior.
+If NARRATIVE_PATTERN is absent, default to threshold -> pressure -> release.
+If SEASON is absent, do not invent weather as a dominant subject.
+
+NARRATIVE PATTERN TRANSLATION
+
+Translate NARRATIVE_PATTERN into visual pressure, not plot.
+
+Use it to control:
+- compositional openness versus compression
+- edge stability versus fracture
+- palette temperature movement
+- centre density versus peripheral breathing room
+- the degree of survival felt in PAINTING 3
+
+Do not turn NARRATIVE_PATTERN into:
+- text on canvas
+- literal storyboard scenes
+- cinematic stills
+- symbolic cliches
+
+SEASON TRANSLATION
+
+SEASON may affect:
+- light temperature
+- atmospheric density
+- vegetal or architectural cues if genre allows
+- dryness or saturation of the palette
+
+SEASON must not overpower the artist-derived visual DNA.
+Season is a modifier, not the concept.
+
+SUBJECT SELECTION RULES
+
+The three paintings must not repeat the same composition with minor palette changes.
+
+Variation across the set must come from at least three of the following:
+- shift in spatial depth
+- shift in scale of forms
+- shift in horizon logic or vertical pressure
+- shift in centre-to-edge paint density
+- shift in motif grouping
+- shift in light distribution
+
+If GENRE implies portrait, landscape, still life, interior, marine, botanical, or abstract tendencies, use that as a compositional field, not as a demand for literal illustration.
+If the artist is best translated through formal language rather than objects, prioritize shape, mass, rhythm, interval, and paint behavior.
+
+PROMPT WRITING RULES
+
+Each final prompt must be one dense paragraph, not a list.
+Write in declarative production language.
+Do not use placeholders.
+Do not address the model directly with commands such as "render," "create," or "make."
+Do not mention aspect ratio terms more than once per prompt.
+Do not repeat the exact same camera sentence across all three prompts if that causes stiffness; vary lens choice or documentation phrasing while preserving the same capture discipline.
+
+FORBIDDEN CONTENT
+
+Do not include:
+- artist names inside the prompt body unless needed for historical anchoring
+- museum names
+- wall labels
+- subtitles
+- captions
+- hands holding the painting
+- easels
+- studio interiors
+- decorative furniture
+- photorealistic people posed for fashion effect
+- watermark language
+- logos
+- rectangular ornament used as a border device
+- heavy edge treatment that encloses the image like a frame
+- repeated gold pattern hugging all four sides of the canvas
+
+Do not describe impossible mixed media unless TECHNIQUE supports it.
+Do not introduce audio, motion, editing, or film language that belongs to the final video rather than the painting itself.
+
+PROMPT DIFFERENTIATION TARGETS
+
+PAINTING 1 must feel most permeable and legible from distance.
+PAINTING 2 must carry the highest internal pressure and the densest centre handling.
+PAINTING 2 must not feel airy, breathable, open-edged, or atmospherically released.
+PAINTING 2 should minimize breathing space and keep edge behavior tense, compressed, or interrupted rather than expansive.
+PAINTING 3 must retain consequence while recovering air, rhythm, or light.
+
+Across the set:
+- at least one structural motif must recur
+- at least one major compositional choice must change between each painting
+- PAINTING 3 must not simply soften PAINTING 2; it must resolve it
+
+SELF-CHECK BEFORE RETURNING
+
+Before returning the three prompts, verify:
+- each prompt still describes a painting, not a room
+- each prompt can plausibly generate a distinct sale-page-worthy image
+- each prompt contains concrete pigment language
+- each prompt contains concrete surface behavior
+- each prompt preserves frontal capture discipline
+- no prompt contains a frame illusion, perimeter enclosure, or decorative border logic
+- no prompt feels like a copy of a known masterpiece
+- the set reads as ENTRY -> DEPTH -> CATHARSIS without needing explanation
+
+FAILURE CONDITION
+
+If you cannot produce three distinct, materially convincing prompts from the provided inputs, do not explain the problem.
+Instead, tighten the prompts around TECHNIQUE, COLOUR_WORLD, and EMOTIONAL_REGISTER until the set becomes viable.

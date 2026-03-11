@@ -1,0 +1,169 @@
+CANVAS & GLASS
+Final Avatar Agent Orchestration OSR
+
+TERMS
+
+- `MS` = Main Script
+- `AAO` = Avatar Agent Orchestration
+- `SP` = System Prompt
+- `OSR` = Overlay System Rules
+
+These rules restrict Avatar Agent behavior.
+They override convenience, stylistic habit, and default model templating.
+
+OSR-A1
+AAO must choose exactly one base `narrative_pattern` per episode.
+
+OSR-A2
+Tone of voice across `MON1..MON4` must come from the selected `narrative_pattern`.
+
+OSR-A3
+`MON1`, `MON2`, `MON3`, and `MON4` must still sound like the same authored voice inside one episode.
+
+OSR-A4
+Anti-repetition logic must read Google Sheet `Avatar` and `SETTINGS` before pattern approval.
+
+OSR-A5
+AAO must reject a pattern package that violates `avatar_repeat_kr` within `avatar_repeat_history_depth`.
+
+OSR-A6
+The Avatar Agent execution layer must run through Anthropic API, but Anthropic output is not final until OSR validation passes.
+
+OSR-A7
+Monologues must feel human-spoken, not templated, not database-written, and not stitched from visible placeholders.
+
+OSR-A8
+AAO must check monologue linkage:
+- `MON1 -> MON2`
+- `MON2 -> MON3`
+- `MON3 -> MON4`
+
+Transitions must feel spoken and continuous, not mechanically segmented.
+
+OSR-A9
+AAO must check humanization:
+- remove rigid checklist feel
+- remove robotic phrasing
+- remove repeated sentence cadence
+- remove obvious prompt artifacts
+
+OSR-A10
+AAO must check pattern coherence:
+- diction
+- pacing
+- intimacy level
+- rhetorical temperature
+
+These must remain compatible with the chosen `narrative_pattern`.
+
+OSR-A11
+AAO must not allow biography, wine, playlist, and painting blocks to appear as disconnected modules.
+
+OSR-A12
+AAO must protect the opening retention function of `MON1`.
+
+OSR-A13
+AAO must protect the orientation and bridge function of `MON2`.
+
+OSR-A14
+AAO must protect the intimacy and approach function of `MON3`.
+
+OSR-A15
+AAO must protect the synthesis and non-generic close of `MON4`.
+
+OSR-A16
+AAO must reject generic YouTube closers, hard-sell language, or stock gratitude formulas that flatten episode identity.
+
+OSR-A17
+AAO must reject outputs where the selected `narrative_pattern` has no audible effect on tone of voice.
+
+OSR-A18
+AAO must reject outputs that feel over-processed, over-literary, or less human than the underlying template requires.
+
+OSR-A19
+AAO must return either one fully approved monologue set or a structured failure.
+
+OSR-A20
+AAO must write the approved pattern package to Google Sheet `Avatar` after successful validation.
+
+HUMANIZATION RULES
+
+HR-1
+Facts must be recast into spoken language, not dropped into the monologue as raw database statements.
+
+HR-2
+Required content must sound lived and voiced, not inserted as labels.
+
+HR-3
+The listener must feel one person speaking continuously, not a prompt assembling components in sequence.
+
+HR-4
+AAO must reject outputs where required variables remain technically present but feel mechanically pasted.
+
+HR-5
+The final voice must preserve warmth, breath, and spoken plausibility even when the selected pattern is intellectually dense or formally restrained.
+
+BRAIDING RULES
+
+BR-1
+Monologue blocks must be braided, not stacked.
+
+BR-2
+Greeting, fact, painting description, playlist mention, wine recommendation, and transition intent must not read like isolated modules unless a rare rhythm reset truly requires it.
+
+BR-3
+At least some paragraphs should carry more than one function at once.
+
+BR-4
+AAO must prefer fused movement such as:
+- hook into fact
+- fact into painting
+- painting into wine
+- wine into invitation
+- reflection into transition
+
+BR-5
+AAO must reject outputs where monologue logic is visibly sequential in a checklist pattern:
+- greeting
+- fact
+- fact
+- painting
+- playlist
+- wine
+
+BLOCK FUSION RULES
+
+BFR-1
+The selected `narrative_pattern` changes how required content is spoken, not whether it exists.
+
+BFR-2
+Narrative pattern is a voice filter, not a content-deletion license.
+
+BFR-3
+AAO must reject outputs where the pattern voice overwhelms or erases mandatory content blocks.
+
+BFR-4
+The two biography facts, painting description, wine recommendation, playlist mention, greeting, and transition layer must remain structurally present after filtering through `narrative_pattern`.
+
+BFR-5
+If a monologue becomes more stylish but less legible in its required content, AAO must force a repair pass.
+
+PATTERN FILTER RULES
+
+PFR-1
+`narrative_pattern` must control:
+- diction
+- sentence rhythm
+- degree of intimacy
+- rhetorical temperature
+- pressure versus spaciousness
+- how Alexander sounds while speaking
+
+PFR-2
+`narrative_pattern` must not change factual payload beyond spoken recasting and ordering adjustments.
+
+PFR-3
+Two different patterns may speak the same required content very differently, but the content obligations remain constant.
+
+PFR-4
+AAO must reject outputs where pattern application results in decorative style without audible authorial humanity.

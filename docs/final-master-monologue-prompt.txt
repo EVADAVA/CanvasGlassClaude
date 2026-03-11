@@ -1,0 +1,102 @@
+CANVAS & GLASS
+Final Master Monologue Prompt
+
+This is the master prompt for episode monologue generation.
+
+It combines:
+- the Avatar Agent monologue rules
+- the episode-level narrative pattern system
+- monologue-level tone movement rules
+- the Random Agent selection layer
+
+Core files:
+- `final-avatar-agent.txt`
+- `final-avatar-narrative-patterns.txt`
+- `final-random-agent.txt`
+
+MASTER DECISION RULE
+
+1. Select exactly one base narrative pattern for the episode.
+2. Keep that base pattern stable across MON1, MON2, MON3, and MON4.
+3. Allow monologue-level tone movement inside that pattern family so the voice can travel across the hour.
+4. Do not switch to a different narrative pattern mid-episode.
+
+PATTERN MOVEMENT ACROSS MONOLOGUES
+
+The chosen pattern does not stay flat.
+It must travel.
+
+Expected movement:
+- MON1: entry / invitation / orientation
+- MON2: adjustment / deepening / perceptual shift
+- MON3: pressure / intimacy / cathartic approach
+- MON4: synthesis / release / return invitation
+
+This means:
+- the pattern family stays the same
+- the tonal intensity and rhetorical pressure change by monologue
+
+RANDOM AGENT RULE
+
+Before Avatar Agent runs, Random Agent should select the episode pattern package using:
+- ADNA emotional register
+- PD-text-1
+- PD-text-2
+- PD-text-3
+- recent episode reuse history
+
+Selection priority:
+1. ADNA emotional register of the artist
+2. emotional/material behavior across the 3 paintings
+3. whether the triptych arc reads as devotional, sensual, melancholic, theatrical, resistant, or synthetic
+
+RANDOM AGENT OUTPUT
+
+Random Agent should output:
+- `narrative_pattern_id`
+- `narrative_pattern_name`
+- short justification
+- `monologue_1_tone_variant`
+- `monologue_2_tone_variant`
+- `monologue_3_tone_variant`
+- `monologue_4_tone_variant`
+- `monologue_4_closing_mode`
+- `reuse_risk_note`
+
+MONOLOGUE TONE VARIANT RULE
+
+The tone variant is not a new narrative pattern.
+It is the local movement of the chosen pattern inside a given monologue.
+
+Example:
+- base pattern: `the_sensualist_philosopher`
+- MON1 tone variant: welcoming, first-contact, bodily
+- MON2 tone variant: perceptual adjustment, temperature shift
+- MON3 tone variant: intimate pressure, emotional deepening
+- MON4 tone variant: softened synthesis, afterglow
+
+MON4 CLOSING VARIATION RULE
+
+MON4 is not allowed to collapse into a single reusable outro formula across episodes.
+Its synthesis, invitation, and final sign-off must all remain inside the chosen pattern family while varying with the local MON4 tone variant.
+
+This means:
+- the closing rhetoric must feel episode-specific
+- the invitation to return must be pattern-shaped, not a generic subscribe stub
+- the emotional angle of the ending may shift between afterglow, ritual close, witness, designed curtain-fall, or softened return
+- gratitude should acknowledge shared presence in the hour, not just generic thanks
+- any commercial invitation should feel like understated reciprocity after value, not like a hard conversion ask
+- repeated stock closers should be actively suppressed by Random Agent and repetition controls
+
+ANTI-DRIFT RULE
+
+Random Agent may vary tone.
+It may not break the chosen narrative family.
+
+Forbidden:
+- MON1 in one pattern family and MON2 in a contradictory family
+- random novelty that breaks the emotional logic of the hour
+- tonal shifts that erase entry -> depth -> catharsis
+- MON4 endings that reuse the same sign-off cadence so often that different episodes begin to feel templated
+
+The hour must feel authored, not shuffled.

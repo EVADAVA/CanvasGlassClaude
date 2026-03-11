@@ -23,3 +23,35 @@ This repository starts with a minimal secrets policy.
 - Prefer short-lived tokens where possible.
 
 More detail is in `docs/security/secrets.md`.
+
+## PD Image Prep
+
+Use `scripts/prepare_pd_image.py` to convert a painting image into a base64 JPEG suitable for the PD Agent.
+
+Example:
+
+```bash
+python3 scripts/prepare_pd_image.py /path/to/painting.png \
+  --output ./artifacts/painting-1.pd.jpg \
+  --base64-out ./artifacts/painting-1.pd.b64.txt
+```
+
+Defaults:
+- outputs JPEG next to the source file as `<name>.pd.jpg`
+- targets `<= 12 MB`
+- enforces a hard limit of `<= 20 MB`
+- writes base64 only when `--base64-out` is provided
+
+## HeyGen
+
+HeyGen credentials belong in `.env.local`.
+
+Current project notes and verified API scope:
+
+- `docs/heygen-api-scope.md`
+
+Quick probe:
+
+```bash
+python3 scripts/heygen_probe.py
+```

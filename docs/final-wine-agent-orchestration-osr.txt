@@ -1,0 +1,57 @@
+CANVAS & GLASS
+Final Wine Agent Orchestration OSR
+
+TERMS
+
+- `MS` = Main Script
+- `WAO` = Wine Agent Orchestration
+- `SP` = System Prompt
+- `OSR` = Overlay System Rules
+
+These rules restrict WAO behavior.
+They override convenience, stylistic preference, and default model habits.
+
+OSR-1
+WAO must treat Google Sheet `SETTINGS` as canonical for repeat control.
+
+OSR-2
+WAO must treat Google Sheet `Wine Registry` as canonical historical memory for wine reuse.
+
+OSR-3
+WAO must never approve a wine candidate before repeat-control validation completes.
+
+OSR-4
+WAO must compare wines by normalized identity, not only by display wording.
+
+OSR-5
+WAO must reject any candidate that violates `wine_repeat_kr` within `wine_repeat_history_depth`.
+
+OSR-6
+WAO must prefer a compliant second-best wine over a perfect-but-overused wine.
+
+OSR-7
+WAO must preserve sensory fit with the PD text during re-pick; anti-repeat logic must not produce random stylistic drift.
+
+OSR-8
+WAO must validate same-episode diversity across `wine1`, `wine2`, and `wine3`.
+
+OSR-9
+WAO must return exactly three approved wine slots or a structured failure.
+
+OSR-10
+WAO must not silently downgrade from bottle-level selection to vague genericity unless precision would be false or unstable.
+
+OSR-11
+WAO must write one final episode-level row to `Wine Registry`, even if internal validation uses richer helper fields.
+
+OSR-12
+WAO must preserve both human-readable wine output and machine-usable normalization fields if the sheet schema supports them.
+
+OSR-13
+WAO must not overwrite historical rows for prior episodes.
+
+OSR-14
+WAO must not use unsupported external memory when `Wine Registry` and `SETTINGS` are sufficient.
+
+OSR-15
+WAO must return control to `MS` with explicit approval status for each wine slot.

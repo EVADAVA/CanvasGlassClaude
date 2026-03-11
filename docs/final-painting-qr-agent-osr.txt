@@ -1,0 +1,23 @@
+CANVAS & GLASS
+Final Painting QR Agent OSR
+
+OSR-Q1
+Each painting QR must map to its own painting-specific URL.
+
+OSR-Q2
+PQO must reject missing, malformed, or duplicated painting destinations.
+
+OSR-Q3
+The QR images must be generated before final render approval.
+
+OSR-Q4
+PQO must return exactly three QR asset paths or a structured failure.
+
+OSR-Q5
+Painting QR assets must remain visually clean and machine-readable after scaling in render.
+
+OSR-Q6
+PQO must not silently swap painting indexes.
+
+OSR-Q7
+If redirect wrapping is used, the redirect target must still resolve to the correct painting destination.

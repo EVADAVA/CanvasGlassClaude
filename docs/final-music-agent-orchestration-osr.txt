@@ -1,0 +1,72 @@
+CANVAS & GLASS
+Final Music Agent Orchestration OSR
+
+TERMS
+
+- `MS` = Main Script
+- `MAO` = Music Agent Orchestration
+- `SP` = System Prompt
+- `OSR` = Overlay System Rules
+
+These rules restrict MAO behavior.
+They override convenience, stylistic preference, and default model habits.
+
+OSR-1
+MAO must treat Google Sheet `SETTINGS` as canonical for track repeat control.
+
+OSR-2
+MAO must treat Google Sheet `tracks_registry` as canonical historical memory for playlist reuse.
+
+OSR-3
+MAO must never approve a playlist before track-repeat validation completes.
+
+OSR-4
+MAO must compare tracks by normalized identity, preferably Spotify track ID.
+
+OSR-5
+MAO must reject any playlist candidate that violates `track_repeat_kr` within `track_repeat_history_depth`.
+
+OSR-6
+MAO must preserve the episode sonic arc during playlist revision.
+
+OSR-7
+MAO must prefer a compliant second-best track over a perfect-but-overused track.
+
+OSR-8
+MAO must protect same-playlist diversity and avoid excessive artist clustering unless the source material strongly demands it.
+
+OSR-9
+MAO must return one approved playlist package or a structured failure.
+
+OSR-10
+MAO must keep playlist duration aligned to episode settings.
+
+OSR-10A
+MAO must optimize first for retention-supportive listening flow, then for stylistic elegance.
+
+OSR-11
+MAO must trigger cover generation only after the track list is approved.
+
+OSR-12
+MAO must return exactly the configured number of cover options and wait for explicit user selection.
+
+OSR-13
+MAO must append accepted tracks to `tracks_registry` without overwriting historical rows.
+
+OSR-14
+MAO must preserve both human-readable track strings and machine-usable normalized identifiers when available.
+
+OSR-15
+MAO must return control to `MS` with explicit approval status for playlist and covers.
+
+OSR-16
+MAO must allow Spotify playlist creation before final QR finalization.
+
+OSR-17
+MAO must defer final playlist QR generation until the YouTube video private link exists or the redirect target is ready.
+
+OSR-18
+MAO must treat the playlist QR target as episode-specific video routing, not as a generic channel link.
+
+OSR-19
+The search-layer reasoning base for Music Agent must use Perplexity API before Spotify API execution.
