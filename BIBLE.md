@@ -883,3 +883,22 @@ Current live test state
   - `Spotify`
   - `Avatar final`
   - `HeyGen prompts`
+
+Current HeyGen template findings
+
+- live template ids currently confirmed by API:
+  - `9d56b23f021a4357ab3a9af178a1d58c` = `SENS`
+  - `9e1e1c98022243e08d659789fabc658c` = `SENS_R`
+  - `576c74b751b44125b53324ed23a7cc63` = `SENSV`
+- `SENS`
+  - has `MONOLOGUE_TEXT` as `text`
+  - has `SENS_TEMP` as `voice`
+- `SENS_R`
+  - has `MONOLOGUE_TEXT` as `text`
+- `SENSV`
+  - now has `MONOLOGUE_TEXT` as `text`
+  - has `SENS_V` as `voice`
+- recent live HeyGen jobs:
+  - `SENS` test render video id: `8823857394234048a7848fa5baf71a57`
+  - `SENS_R` test render video id: `0d7ad3f9f14a4f218203196f90666465`
+  - `SENSV` test render video id: `61171d2bb97c4a97945ab4b48bc66471`
