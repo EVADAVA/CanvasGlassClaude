@@ -19,6 +19,10 @@ One `Episode` equals one `Artist Name`.
 
 The artist is selected from Google Sheet registry logic in sequence to avoid repeats.
 
+Run modes:
+- `test [Artist Name]` = test run, uses `test_<artist_slug>`
+- `start [Artist Name]` = release run, uses `episodeNNN_<artist_slug>`
+
 ## Naming
 
 - `artist_name`: human-readable artist name from registry
@@ -53,19 +57,19 @@ All filesystem paths must use `artist_slug`, not raw `artist_name`.
 
 ```text
 input/
-  episode001_aivazovsky/
+  test_aivazovsky/
     painting1.jpg
     painting2.jpg
     painting3.jpg
 
 output/
-  episode001_aivazovsky/
+  test_aivazovsky/
     adna/
-      episode001_aivazovsky_ADNA-text.txt
+      test_aivazovsky_ADNA-text.txt
     nb/
-      episode001_aivazovsky_NB_Painting1_Threshold_of_First_Light.txt
-      episode001_aivazovsky_NB_Painting2_Sea_Under_Pressure.txt
-      episode001_aivazovsky_NB_Painting3_After_the_Squall_Light.txt
+      test_aivazovsky_NB_Painting1_Threshold_of_First_Light.txt
+      test_aivazovsky_NB_Painting2_Sea_Under_Pressure.txt
+      test_aivazovsky_NB_Painting3_After_the_Squall_Light.txt
     pd/
       episode001_aivazovsky_PD-text1.txt
       episode001_aivazovsky_PD-text2.txt

@@ -2,7 +2,7 @@ Canvas & Glass New Pipeline Skeleton
 
 Episode algorithm
 
-1. `MS start` selects the artist and creates the episode workspace.
+1. `MS start` or `MS test` selects the artist and creates the run workspace.
 2. `ADNA Agent` builds `Artist DNA`.
 3. `NB Agent` turns `Artist DNA` into 3 titled Nano Banana prompts.
 4. user generates or places 3 paintings into the episode input folder.
@@ -22,7 +22,7 @@ Pipeline table
 
 | Step | Layer / Agent | Main input | Main output | API / external system | Filesystem target |
 |---|---|---|---|---|---|
-| 1 | `MS start` | `ARTIST_POOL`, `SETTINGS`, user command `start Айвазовский` | `episode_id`, episode folders, manifest, redirect reservations | Google Sheets API | `input/episode*_artistname/`, `output/episode*_artistname/` |
+| 1 | `MS start` / `MS test` | `ARTIST_POOL`, `SETTINGS`, user command `start Айвазовский` or `test Айвазовский` | `run_id`, run folders, manifest, redirect reservations | Google Sheets API | `input/test_*` or `input/episode*`, matching `output/` |
 | 2 | `ADNA Agent` | `artist_name` | `ADNA-text`, `fact_1..6` | Perplexity API | `output/episode*_artistname/adna/` |
 | 3 | `NB Agent` | `ADNA-text`, optional `season`, `genre`, `narrative_pattern` bias | `painting_title_1..3`, `nb_prompt_1..3` | no execution API required at prompt-writing stage | `output/episode*_artistname/nb/` |
 | 4 | user / image generation | `NB` prompts | 3 painting image files | Nano Banana Pro / NB2 | `input/episode*_artistname/` |

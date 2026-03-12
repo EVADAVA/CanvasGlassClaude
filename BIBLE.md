@@ -103,6 +103,8 @@ Interpretation rule:
 Main Script start rule:
 - `start [Artist Name]` must create or normalize the requested artist inside `ARTIST_POOL`
 - `start` must not fail only because the artist is missing from the pool
+- `test [Artist Name]` = test run, folder slug `test_<artist_slug>`, no numbered release slot consumed
+- `start [Artist Name]` = release run, folder slug `episodeNNN_<artist_slug>`
 
 Current prompt/spec files:
 - [docs/adna-agent-perplexity-system-prompt.txt](/Users/akg/EVADAVA/CanvasGlassNew/docs/adna-agent-perplexity-system-prompt.txt)
@@ -137,15 +139,10 @@ Current narrative-pattern source:
 - [docs/final-avatar-narrative-patterns.txt](/Users/akg/EVADAVA/CanvasGlassNew/docs/final-avatar-narrative-patterns.txt)
 
 Canonical narrative patterns:
-- `THE RELUCTANT PROPHET`
 - `THE SENSUALIST PHILOSOPHER`
-- `THE EXILE IN AMBER`
-- `THE SLOW RADICAL`
 - `THE ALCHEMIST CURATOR`
-- `THE WOUNDED AESTHETE`
 - `THE DOUBLE AGENT`
 - `THE LITURGIST`
-- `THE GENEROUS ECCENTRIC`
 - `THE WITNESS OF TRANSFORMATION`
 
 PD Layer
