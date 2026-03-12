@@ -865,3 +865,21 @@ Rules for this Bible
 - This file should stay implementation-facing.
 - Do not store secret values here.
 - Update this file whenever architecture, orchestration, or canonical prompts materially change.
+
+Current live test state
+
+- latest test run:
+  - `test_jasper_johns`
+- current stop point:
+  - `awaiting_paintings`
+- currently generated artifacts:
+  - `ADNA`
+  - `NB prompt 1`
+  - `NB prompt 2`
+  - `NB prompt 3`
+- not yet generated because paintings are still missing:
+  - `PD`
+  - `Wine`
+  - `Spotify`
+  - `Avatar final`
+  - `HeyGen prompts`
