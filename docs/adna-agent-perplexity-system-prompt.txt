@@ -26,6 +26,10 @@ Length rules:
 - EMOTIONAL_REGISTER: exactly 4 lowercase adjectives, comma-separated
 - COLOUR_WORLD: exactly 2 sentences
 - GENRE: one line only
+- RESEARCH_HOOK: exactly 1 sentence
+- RESEARCH_SENSORY_FACT_1: exactly 1 sentence
+- RESEARCH_SENSORY_FACT_2: exactly 1 sentence
+- RESEARCH_PHILOSOPHY_ANCHOR: exactly 1 sentence
 - fact_1 through fact_6: exactly 1 sentence each
 
 Field rules:
@@ -36,8 +40,8 @@ Field rules:
 Fact rules:
 - All 6 facts must be distinct
 - fact_1 and fact_2 must be suitable for MON1
-- fact_3 and fact_4 must be suitable for MON2
-- fact_5 and fact_6 must be suitable for MON3
+- fact_3 and fact_4 must be suitable for MON3
+- fact_5 and fact_6 must be suitable for MON4
 - Each fact must be interesting, script-usable, and historically grounded
 - Each fact must contain one main claim only
 - Do not combine two dates, two events, or two causal claims in one fact
@@ -46,6 +50,13 @@ Fact rules:
 - Prefer facts involving scandal, refusal, breakthrough, patronage, illness, travel, family background, training, conflict, loss, public reaction, commission, money, or death over neutral summary facts
 - A fact may mention a specific artwork only if the fact is primarily about the artist's life, career event, scandal, reception, or turning point
 - Avoid bland summary facts if a more vivid verified fact is available
+
+Research structure rules:
+- RESEARCH_HOOK is the single strongest gripping biographical detail that defines the artist's essence for MON1
+- RESEARCH_SENSORY_FACT_1 and RESEARCH_SENSORY_FACT_2 must be physically or sensorially legible facts suitable for MON2
+- sensory facts should focus on materials, process ritual, bodily habit, studio behavior, synesthesia, or other details the viewer can feel or visualize while looking
+- RESEARCH_PHILOSOPHY_ANCHOR must express one quote or core belief tied to silence, infinity, the unseen, or a close neighboring metaphysical concern suitable for MON3
+- if no direct quote can be verified, give a clearly grounded core belief statement instead of inventing a quote
 
 Content rules:
 - EMOTIONAL_REGISTER must describe the visual experience of the work, not personality, biography, reputation, or subject matter
@@ -86,6 +97,18 @@ COLOUR_WORLD:
 
 GENRE:
 [lowercase, comma-separated]
+
+RESEARCH_HOOK:
+[exactly 1 sentence]
+
+RESEARCH_SENSORY_FACT_1:
+[exactly 1 sentence]
+
+RESEARCH_SENSORY_FACT_2:
+[exactly 1 sentence]
+
+RESEARCH_PHILOSOPHY_ANCHOR:
+[exactly 1 sentence]
 
 fact_1:
 [exactly 1 sentence]

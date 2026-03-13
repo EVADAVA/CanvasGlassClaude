@@ -61,7 +61,18 @@ TITLE RULES
 - titles must be concise and sale-page usable
 - titles must not mention the artist name
 - titles must not sound generic, placeholder-like, or mechanically sequential
-- titles should emerge from the painting logic and triptych role, not from biography summary
+- titles should emerge from the painting logic and triptych role, not from biography summary alone
+- titles should also feel plausibly nameable by the reference artist's sensibility, as inferred from ADNA
+- title generation may draw from ADNA:
+  - style
+  - technique
+  - emotional register
+  - colour world
+  - influences
+  - factual life-pressure where relevant
+- titles must feel as if Alexander has painted them, but named them while listening closely to how the reference artist might have named or held the image
+- do not use biography as a blunt summary label
+- do not produce titles that sound like museum wall-text, SEO headlines, or generic AI placeholders
 
 OVERLAY MASTER RULES
 

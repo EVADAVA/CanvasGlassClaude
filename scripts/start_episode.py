@@ -372,10 +372,25 @@ def write_manifest(
 
 def extract_adna_facts(adna_text: str) -> dict[str, str]:
     facts: dict[str, str] = {}
+    special_fields = {
+        "research_hook": "research_hook",
+        "research_sensory_fact_1": "research_sensory_fact_1",
+        "research_sensory_fact_2": "research_sensory_fact_2",
+        "research_philosophy_anchor": "research_philosophy_anchor",
+    }
+    for key, label in special_fields.items():
+        match = re.search(rf"{label}:\s*(.+?)(?:\n\n|\Z)", adna_text, re.DOTALL | re.IGNORECASE)
+        if match:
+            facts[key] = " ".join(match.group(1).strip().split())
     for idx in range(1, 7):
         match = re.search(rf"fact_{idx}:\s*(.+?)(?:\n\n|\Z)", adna_text, re.DOTALL | re.IGNORECASE)
         if match:
             facts[f"fact_{idx}"] = " ".join(match.group(1).strip().split())
+    if "research_sensory_fact_1" in facts or "research_sensory_fact_2" in facts:
+        facts["research_sensory_facts"] = json.dumps(
+            [fact for fact in [facts.get("research_sensory_fact_1"), facts.get("research_sensory_fact_2")] if fact],
+            ensure_ascii=False,
+        )
     return facts
 
 
@@ -469,6 +484,15 @@ def update_manifest_after_nb(
         "painting2": artifact_data["painting2"],
         "painting3": artifact_data["painting3"],
     }
+    if "research_hook" in artifact_data:
+        manifest["research_hook"] = artifact_data["research_hook"]
+    if "research_philosophy_anchor" in artifact_data:
+        manifest["research_philosophy_anchor"] = artifact_data["research_philosophy_anchor"]
+    if "research_sensory_facts" in artifact_data:
+        try:
+            manifest["research_sensory_facts"] = json.loads(artifact_data["research_sensory_facts"])
+        except json.JSONDecodeError:
+            manifest["research_sensory_facts"] = []
     manifest["expected_inputs"] = [
         str(input_dir / f"{manifest['episode_slug']}_{fs_slug(artifact_data['painting1'])}.jpg"),
         str(input_dir / f"{manifest['episode_slug']}_{fs_slug(artifact_data['painting2'])}.jpg"),

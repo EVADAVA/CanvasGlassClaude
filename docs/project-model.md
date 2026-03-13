@@ -40,9 +40,10 @@ All filesystem paths must use `artist_slug`, not raw `artist_name`.
 1. Telegram triggers `Script`.
 2. `Script` reads Google Sheet registry and picks the next artist.
 3. `Script` creates episode workspace for that artist.
-4. `ADNA Agent` generates `ADNA-text` and 6 biography facts.
+4. `ADNA Agent` generates `ADNA-text`, 6 biography facts, one `research_hook`, two `research_sensory_facts`, and one `research_philosophy_anchor`.
 5. `NB Agent` receives `Artist DNA` and performs the Nano Banana prompt-engineering step under its `OSR`.
 6. `NB Agent` outputs 3 prompts for `Nano Banana Pro / NB2`, each with a pre-generation painting title.
+7. Painting titles may draw from `ADNA`, including the naming pressure of the reference artist's sensibility, but must not copy known artwork titles.
 7. `Script` pauses and waits for 3 paintings in the episode input folder.
 8. `Painting Describer Agent` generates `PD-text-1..3`.
 9. `Wine Agent` generates 3 wine recommendations.
@@ -57,54 +58,54 @@ All filesystem paths must use `artist_slug`, not raw `artist_name`.
 
 ```text
 input/
-  test_aivazovsky/
+  test_artist_slug/
     painting1.jpg
     painting2.jpg
     painting3.jpg
 
 output/
-  test_aivazovsky/
+  test_artist_slug/
     adna/
-      test_aivazovsky_ADNA-text.txt
+      test_artist_slug_ADNA-text.txt
     nb/
-      test_aivazovsky_NB_Painting1_Threshold_of_First_Light.txt
-      test_aivazovsky_NB_Painting2_Sea_Under_Pressure.txt
-      test_aivazovsky_NB_Painting3_After_the_Squall_Light.txt
+      test_artist_slug_NB_Painting1_Title_One.txt
+      test_artist_slug_NB_Painting2_Title_Two.txt
+      test_artist_slug_NB_Painting3_Title_Three.txt
     pd/
-      episode001_aivazovsky_PD-text1.txt
-      episode001_aivazovsky_PD-text2.txt
-      episode001_aivazovsky_PD-text3.txt
+      test_artist_slug_PD-text1.txt
+      test_artist_slug_PD-text2.txt
+      test_artist_slug_PD-text3.txt
     wine/
-      episode001_aivazovsky_painting1_wine1.txt
-      episode001_aivazovsky_painting2_wine2.txt
-      episode001_aivazovsky_painting3_wine3.txt
+      test_artist_slug_painting1_wine1.txt
+      test_artist_slug_painting2_wine2.txt
+      test_artist_slug_painting3_wine3.txt
     spotify/
-      episode001_aivazovsky_playlist.txt
-      episode001_aivazovsky_playlist_cover_final.jpg
-      episode001_aivazovsky_playlist_qr.png
+      test_artist_slug_playlist.txt
+      test_artist_slug_playlist_cover_final.jpg
+      test_artist_slug_playlist_qr.png
     monologues/
       comparison/
-        episode001_aivazovsky_painting1_mon1_draft_vs_final.diff
-        episode001_aivazovsky_painting2_mon2_draft_vs_final.diff
-        episode001_aivazovsky_painting3_mon3_draft_vs_final.diff
-        episode001_aivazovsky_mon4_draft_vs_final.diff
+        test_artist_slug_painting1_mon1_draft_vs_final.diff
+        test_artist_slug_painting2_mon2_draft_vs_final.diff
+        test_artist_slug_painting3_mon3_draft_vs_final.diff
+        test_artist_slug_mon4_draft_vs_final.diff
       draft/
-        episode001_aivazovsky_painting1_mon1_draft.txt
-        episode001_aivazovsky_painting2_mon2_draft.txt
-        episode001_aivazovsky_painting3_mon3_draft.txt
-        episode001_aivazovsky_mon4_draft.txt
+        test_artist_slug_painting1_mon1_draft.txt
+        test_artist_slug_painting2_mon2_draft.txt
+        test_artist_slug_painting3_mon3_draft.txt
+        test_artist_slug_mon4_draft.txt
       final/
-        episode001_aivazovsky_painting1_mon1_final.txt
-        episode001_aivazovsky_painting2_mon2_final.txt
-        episode001_aivazovsky_painting3_mon3_final.txt
-        episode001_aivazovsky_mon4_final.txt
+        test_artist_slug_the_sensualist_philosopher_painting1_mon1_final.txt
+        test_artist_slug_the_sensualist_philosopher_painting2_mon2_final.txt
+        test_artist_slug_the_sensualist_philosopher_painting3_mon3_final.txt
+        test_artist_slug_the_sensualist_philosopher_mon4_final.txt
     heygen/
     qr/
-      episode001_aivazovsky_painting1_qr.png
-      episode001_aivazovsky_painting2_qr.png
-      episode001_aivazovsky_painting3_qr.png
+      test_artist_slug_painting1_qr.png
+      test_artist_slug_painting2_qr.png
+      test_artist_slug_painting3_qr.png
     publish/
-      episode001_aivazovsky_videodescription.txt
+      test_artist_slug_videodescription.txt
 ```
 
 ## Episode Status Model
@@ -382,11 +383,11 @@ Required columns:
 - `notes`
 
 Approved test redirects:
-- `https://evadava.com/episode001_aivazovsky_video/`
-- `https://evadava.com/episode001_aivazovsky_playlist/`
-- `https://evadava.com/episode001_aivazovsky_painting1/`
-- `https://evadava.com/episode001_aivazovsky_painting2/`
-- `https://evadava.com/episode001_aivazovsky_painting3/`
+- `https://evadava.com/test_artist_slug_video/`
+- `https://evadava.com/test_artist_slug_playlist/`
+- `https://evadava.com/test_artist_slug_painting1/`
+- `https://evadava.com/test_artist_slug_painting2/`
+- `https://evadava.com/test_artist_slug_painting3/`
 
 ### Tab: `SETTINGS`
 

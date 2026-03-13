@@ -64,7 +64,9 @@ Operational rule:
 - monologue filename state is canonical:
 - `*_draft.txt` = not final, not allowed into HeyGen prompts
 - `*_final.txt` = final Avatar output, allowed into HeyGen prompts
+- final monologue filenames must include the selected `narrative_pattern_name` slug so the correct avatar/template choice in HeyGen is obvious from the filename alone
 - `*_draft_vs_final.diff` = visible content delta between local draft assembly and API-finalized monologue
+- HeyGen prompt submission is manual, not automatic API generation, until further notice
 
 Skeleton reference:
 - [PIPELINE_SKELETON.md](/Users/akg/EVADAVA/CanvasGlassNew/PIPELINE_SKELETON.md)
@@ -91,6 +93,7 @@ Canonical definition:
 - output: `3 prompts` for `Nano Banana Pro / NB2`
 - each prompt receives a painting title before image generation
 - NB prompt filenames must include `Painting1/2/3` before the title slug
+- painting titles may and should draw from `ADNA`, including how the reference artist might plausibly have named or held such an image, without copying known artwork titles
 - rules source:
   - [docs/final-nb-prompt-agent.txt](/Users/akg/EVADAVA/CanvasGlassNew/docs/final-nb-prompt-agent.txt)
   - [docs/final-nb-agent-osr.txt](/Users/akg/EVADAVA/CanvasGlassNew/docs/final-nb-agent-osr.txt)
@@ -134,6 +137,14 @@ Current state:
 - `MON2` updated from external draft
 - `MON3` still structurally incomplete
 - `MON4` has rules but no full fixed template block
+
+Meditation flow canon:
+- episode length = `60 minutes`
+- `MON1` = `[00:00]` threshold / hook / breathing entry / painting 1 / wine bouquet / Spotify call
+- `MON2` = `[20:00]` reset / painting 2 / exactly 2 ADNA sensory facts / response logic
+- `MON3` = `[40:00]` philosophical catharsis / philosophical anchor / wine aftertaste evolution
+- `MON4` = `[60:00]` return / gratitude / back-to-reality bridge / QR prints-or-originals CTA
+- target length per monologue = `180–250 words`
 
 Current narrative-pattern source:
 - [docs/final-avatar-narrative-patterns.txt](/Users/akg/EVADAVA/CanvasGlassNew/docs/final-avatar-narrative-patterns.txt)
@@ -547,10 +558,11 @@ Artist Pool logic
 
 Canonical flow:
 1. `MS` reads `ARTIST_POOL`
-2. `MS` assigns `episode_id` using zero-padded mask `001`, `002`, `003` ...
-3. `MS` writes artist `status = selected`
-4. `MS` passes `AN` into `ADNA Agent`
-5. after publish, `status = used`
+2. `MS test [Artist Name]` creates `test_<artist_slug>` and does not consume a numbered release slot
+3. `MS start [Artist Name]` creates `episodeNNN_<artist_slug>` and does consume the next numbered release slot
+4. `MS` writes artist `status = selected`
+5. `MS` passes `AN` into `ADNA Agent`
+6. after publish, `status = used`
 
 Approved status values:
 - `selected`
@@ -564,11 +576,6 @@ Approved model:
 - `AVATAR_REGISTRY` maps `narrative_pattern_id -> avatar_id`
 - the chosen avatar remains fixed for the full episode across `MON1..MON4`
 
-Test seed approved for current work:
-- `Artist Name` = `Айвазовский`
-- `artist_slug` = `aivazovsky`
-- test `episode_id` = `001`
-
 Redirect structure
 
 Current approved canonical public redirect domain:
@@ -576,13 +583,13 @@ Current approved canonical public redirect domain:
 
 Current approved redirect patterns:
 - episode video redirect:
-  - [https://evadava.com/episode001_aivazovsky_video/](https://evadava.com/episode001_aivazovsky_video/)
+  - [https://evadava.com/test_artist_slug_video/](https://evadava.com/test_artist_slug_video/)
 - episode playlist redirect:
-  - [https://evadava.com/episode001_aivazovsky_playlist/](https://evadava.com/episode001_aivazovsky_playlist/)
+  - [https://evadava.com/test_artist_slug_playlist/](https://evadava.com/test_artist_slug_playlist/)
 - painting redirects:
-  - [https://evadava.com/episode001_aivazovsky_painting1/](https://evadava.com/episode001_aivazovsky_painting1/)
-  - [https://evadava.com/episode001_aivazovsky_painting2/](https://evadava.com/episode001_aivazovsky_painting2/)
-  - [https://evadava.com/episode001_aivazovsky_painting3/](https://evadava.com/episode001_aivazovsky_painting3/)
+  - [https://evadava.com/test_artist_slug_painting1/](https://evadava.com/test_artist_slug_painting1/)
+  - [https://evadava.com/test_artist_slug_painting2/](https://evadava.com/test_artist_slug_painting2/)
+  - [https://evadava.com/test_artist_slug_painting3/](https://evadava.com/test_artist_slug_painting3/)
 
 These must be stored in:
 - `REDIRECT_REGISTRY`
@@ -609,15 +616,14 @@ Applied to the live production spreadsheet:
   - `painting_redirect_base_path = /`
   - `playlist_redirect_base_path = /`
   - `redirect_slug_pattern = episode{episode_id}_{artist_slug}_{entity_name}`
-- inserted test artist seed:
-  - `Айвазовский`
+- no hardcoded artist seeds should exist
 
-Reserved canonical routes now stored in the live sheet:
-- [https://evadava.com/episode001_aivazovsky_video/](https://evadava.com/episode001_aivazovsky_video/)
-- [https://evadava.com/episode001_aivazovsky_playlist/](https://evadava.com/episode001_aivazovsky_playlist/)
-- [https://evadava.com/episode001_aivazovsky_painting1/](https://evadava.com/episode001_aivazovsky_painting1/)
-- [https://evadava.com/episode001_aivazovsky_painting2/](https://evadava.com/episode001_aivazovsky_painting2/)
-- [https://evadava.com/episode001_aivazovsky_painting3/](https://evadava.com/episode001_aivazovsky_painting3/)
+Reserved canonical routes in the live sheet should be created dynamically by the active run:
+- `https://evadava.com/test_artist_slug_video/`
+- `https://evadava.com/test_artist_slug_playlist/`
+- `https://evadava.com/test_artist_slug_painting1/`
+- `https://evadava.com/test_artist_slug_painting2/`
+- `https://evadava.com/test_artist_slug_painting3/`
 
 Deployment note:
 - `REDIRECT_REGISTRY` now treats these `evadava.com` URLs as canonical public addresses
@@ -627,9 +633,11 @@ Folder structure
 
 Approved production filesystem rule:
 - input paintings go to:
-  - `input/episode001_aivazovsky/`
+  - `input/test_artist_slug/` for test runs
+  - `input/episodeNNN_artist_slug/` for release runs
 - all generated episode outputs go to:
-  - `output/episode001_aivazovsky/`
+  - `output/test_artist_slug/` for test runs
+  - `output/episodeNNN_artist_slug/` for release runs
 
 Approved output subfolders inside one episode folder:
 - `adna/`
@@ -645,24 +653,15 @@ Approved output subfolders inside one episode folder:
 - `publish/`
 
 Approved naming direction:
-- `episode001_aivazovsky_ADNA-text.txt`
-- `episode001_aivazovsky_NB_Threshold_of_First_Light.txt`
-- `episode001_aivazovsky_PD-text1.txt`
-- `episode001_aivazovsky_painting1_wine1.txt`
-- `monologues/draft/episode001_aivazovsky_painting1_mon1_draft.txt`
-- `monologues/draft/episode001_aivazovsky_mon4_draft.txt`
-- `monologues/final/episode001_aivazovsky_painting1_mon1_final.txt`
-- `monologues/final/episode001_aivazovsky_mon4_final.txt`
-- `episode001_aivazovsky_videodescription.txt`
-
-Current bootstrap state
-
-- `MS start` entrypoint:
-  - [scripts/start_episode.py](/Users/akg/EVADAVA/CanvasGlassNew/scripts/start_episode.py)
-- current locked episode:
-  - `episode001_aivazovsky`
-- current episode manifest:
-  - [episode001_aivazovsky_start-manifest.json](/Users/akg/EVADAVA/CanvasGlassNew/output/episode001_aivazovsky/publish/episode001_aivazovsky_start-manifest.json)
+- `test_artist_slug_ADNA-text.txt`
+- `test_artist_slug_NB_Painting1_Title_One.txt`
+- `test_artist_slug_PD-text1.txt`
+- `test_artist_slug_painting1_wine1.txt`
+- `monologues/draft/test_artist_slug_painting1_mon1_draft.txt`
+- `monologues/draft/test_artist_slug_mon4_draft.txt`
+- `monologues/final/test_artist_slug_the_sensualist_philosopher_painting1_mon1_final.txt`
+- `monologues/final/test_artist_slug_the_sensualist_philosopher_mon4_final.txt`
+- `test_artist_slug_videodescription.txt`
 
 Spotify Integration Status
 
@@ -866,23 +865,12 @@ Rules for this Bible
 - Do not store secret values here.
 - Update this file whenever architecture, orchestration, or canonical prompts materially change.
 
-Current live test state
+Current run state
 
-- latest test run:
-  - `test_jasper_johns`
-- current stop point:
-  - `awaiting_paintings`
-- currently generated artifacts:
-  - `ADNA`
-  - `NB prompt 1`
-  - `NB prompt 2`
-  - `NB prompt 3`
-- not yet generated because paintings are still missing:
-  - `PD`
-  - `Wine`
-  - `Spotify`
-  - `Avatar final`
-  - `HeyGen prompts`
+- no active run is part of canon right now
+- system should be treated as ready for a fresh command:
+  - `test [Artist Name]`
+  - `start [Artist Name]`
 
 Current HeyGen template findings
 

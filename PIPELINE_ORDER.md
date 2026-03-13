@@ -10,8 +10,8 @@ Canonical order for one episode:
 6. `Wine Agent`
 7. `Music / Playlist Agent`
 8. `Avatar Agent`
-9. stop before `HeyGen execution`
-10. `HeyGen` execution only after template readiness
+9. stop when manual `HeyGen prompts` are ready
+10. `HeyGen` execution only through manual operator submission
 11. `Painting QR Agent`
 12. `Publisher Agent`
 13. `Render Maker Agent`

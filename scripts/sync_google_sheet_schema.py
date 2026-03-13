@@ -353,91 +353,14 @@ def ensure_avatar_registry_seed(token: str) -> None:
 
 def ensure_redirect_registry_seed(token: str) -> None:
     ensure_sheet_with_headers(token, REDIRECT_REGISTRY_SHEET, REDIRECT_REGISTRY_HEADERS)
-    rows = get_values(token, f"{REDIRECT_REGISTRY_SHEET}!A:K")
-    existing_keys = {row[5] for row in rows[1:] if len(row) > 5 and row[5]}
-    ts = now_iso()
-    seeds = [
-        [
-            "001",
-            "Айвазовский",
-            "aivazovsky",
-            "video",
-            "episode_video",
-            "episode001_aivazovsky_video",
-            "https://evadava.com/episode001_aivazovsky_video/",
-            "",
-            "reserved",
-            ts,
-            "Test redirect for episode-level video QR.",
-        ],
-        [
-            "001",
-            "Айвазовский",
-            "aivazovsky",
-            "playlist",
-            "spotify_playlist",
-            "episode001_aivazovsky_playlist",
-            "https://evadava.com/episode001_aivazovsky_playlist/",
-            "",
-            "reserved",
-            ts,
-            "Reserved redirect for the episode Spotify playlist QR flow.",
-        ],
-        [
-            "001",
-            "Айвазовский",
-            "aivazovsky",
-            "painting",
-            "painting1",
-            "episode001_aivazovsky_painting1",
-            "https://evadava.com/episode001_aivazovsky_painting1/",
-            "",
-            "reserved",
-            ts,
-            "Reserved painting landing route 1.",
-        ],
-        [
-            "001",
-            "Айвазовский",
-            "aivazovsky",
-            "painting",
-            "painting2",
-            "episode001_aivazovsky_painting2",
-            "https://evadava.com/episode001_aivazovsky_painting2/",
-            "",
-            "reserved",
-            ts,
-            "Reserved painting landing route 2.",
-        ],
-        [
-            "001",
-            "Айвазовский",
-            "aivazovsky",
-            "painting",
-            "painting3",
-            "episode001_aivazovsky_painting3",
-            "https://evadava.com/episode001_aivazovsky_painting3/",
-            "",
-            "reserved",
-            ts,
-            "Reserved painting landing route 3.",
-        ],
-    ]
-    to_append = [row for row in seeds if row[5] not in existing_keys]
-    if to_append:
-        append_values(token, f"{REDIRECT_REGISTRY_SHEET}!A:K", to_append)
+    # No hardcoded artist/test-route seeds.
+    # Redirect rows are created by the active run through start_episode.py.
 
 
 def ensure_artist_pool_seed(token: str) -> None:
     ensure_sheet_with_headers(token, ARTIST_POOL_SHEET, ARTIST_POOL_HEADERS)
-    rows = get_values(token, f"{ARTIST_POOL_SHEET}!A:K")
-    existing_names = {row[0] for row in rows[1:] if row}
-    if "Айвазовский" not in existing_names:
-        append_values(
-            token,
-            f"{ARTIST_POOL_SHEET}!A:K",
-            [["Айвазовский", "aivazovsky", "Established", "", "0", "0", "", "", "", "", "Test seed for first QR/redirect flow"]],
-        )
+    # No hardcoded artist seed.
+    # ARTIST_POOL is populated dynamically by start_episode.py when needed.
 
 
 def main() -> None:
@@ -477,12 +400,7 @@ def main() -> None:
     ensure_artist_pool_seed(token)
 
     print("Google Sheet schema synced.")
-    print("Test redirect reserved: https://evadava.com/episode001_aivazovsky_video/")
-    print("Test playlist redirect reserved: https://evadava.com/episode001_aivazovsky_playlist/")
-    print("Test painting routes reserved:")
-    print("- https://evadava.com/episode001_aivazovsky_painting1/")
-    print("- https://evadava.com/episode001_aivazovsky_painting2/")
-    print("- https://evadava.com/episode001_aivazovsky_painting3/")
+    print("No hardcoded artist or redirect seeds were inserted.")
 
 
 if __name__ == "__main__":

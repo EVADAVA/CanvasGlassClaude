@@ -44,6 +44,9 @@ INPUT FROM MS
 - `episode_id`
 - `artist_name`
 - `adna_text`
+- `research_hook`
+- `research_sensory_facts`
+- `research_philosophy_anchor`
 - `fact_1`
 - `fact_2`
 - `fact_3`
@@ -81,7 +84,7 @@ For one episode, AAO must:
 
 1. receive the full monologue input package from `MS`
 2. read `Avatar` history and `SETTINGS`
-3. select exactly one `narrative_pattern` from the 10 approved patterns
+3. select exactly one `narrative_pattern` from the 5 approved patterns
 4. construct one episode-level tone-of-voice contour across `MON1`, `MON2`, `MON3`, `MON4`
 5. assign:
    - `narrative_pattern_id`
@@ -128,6 +131,23 @@ Tone-of-voice movement across monologues:
 - `MON4` = synthesis / release / return invitation
 
 This movement is achieved through `tone_variant`, not through changing the base pattern.
+
+TIMING AND LENGTH MODEL
+
+AAO must preserve the canonical episode timing architecture:
+- `MON1` = `[00:00]`
+- `MON2` = `[20:00]`
+- `MON3` = `[40:00]`
+- `MON4` = `[60:00]`
+
+AAO must also preserve the meditation pacing constraint:
+- each monologue should normally remain between `180` and `250` words
+
+Monologue-specific content anchors:
+- `MON1` must include the immersion hook, breathing entry, painting 1 setup, wine bouquet, and Spotify call
+- `MON2` must include exactly 2 sensory facts from ADNA and explain the response-logic of painting 2
+- `MON3` must use the philosophical anchor and mention how the wine has evolved in the glass
+- `MON4` must return the viewer to reality gently and include the final QR-based prints/originals invitation
 
 REPEAT-CONTROL MODEL
 
@@ -178,6 +198,11 @@ Anthropic API output:
 Those outputs are not final until they pass OSR checks.
 Any pre-OSR or pre-approval monologue file must be stored as `*_draft.txt` and must not be treated as a HeyGen prompt input.
 If AAO sees that a `*_final.txt` differs from draft only cosmetically, AAO must force a repair pass before approval.
+AAO must also ensure that each approved `*_final.txt` is already formatted as a HeyGen-readable script:
+- plain spoken text
+- paragraph breaks where helpful
+- optional lightweight `<break time="..."/>` tags only
+- no markdown or leftover placeholders
 
 OUTPUT TO MS
 

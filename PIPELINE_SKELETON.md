@@ -10,8 +10,8 @@ Episode algorithm
 6. `Wine Agent` builds 3 wine picks from `PD` outputs.
 7. `Music / Playlist Agent` builds the playlist package from `PD` outputs and playlist title.
 8. `Avatar Agent` selects one `narr.patt`, builds the tone path, and prepares monologue outputs.
-9. stop before `HeyGen` execution until templates are ready.
-10. `HeyGen` later turns approved monologue prompts into avatar videos.
+9. stop when approved manual `HeyGen prompts` are ready.
+10. `HeyGen` later turns approved monologue prompts into avatar videos through manual operator submission.
 11. `Painting QR Agent` prepares painting QR assets.
 12. `Publisher Agent` builds title, description, links, and publish package.
 13. `Render Maker Agent` assembles the final video.
@@ -22,7 +22,7 @@ Pipeline table
 
 | Step | Layer / Agent | Main input | Main output | API / external system | Filesystem target |
 |---|---|---|---|---|---|
-| 1 | `MS start` / `MS test` | `ARTIST_POOL`, `SETTINGS`, user command `start Айвазовский` or `test Айвазовский` | `run_id`, run folders, manifest, redirect reservations | Google Sheets API | `input/test_*` or `input/episode*`, matching `output/` |
+| 1 | `MS start` / `MS test` | `ARTIST_POOL`, `SETTINGS`, user command `start [Artist Name]` or `test [Artist Name]` | `run_id`, run folders, manifest, redirect reservations | Google Sheets API | `input/test_*` or `input/episode*`, matching `output/` |
 | 2 | `ADNA Agent` | `artist_name` | `ADNA-text`, `fact_1..6` | Perplexity API | `output/episode*_artistname/adna/` |
 | 3 | `NB Agent` | `ADNA-text`, optional `season`, `genre`, `narrative_pattern` bias | `painting_title_1..3`, `nb_prompt_1..3` | no execution API required at prompt-writing stage | `output/episode*_artistname/nb/` |
 | 4 | user / image generation | `NB` prompts | 3 painting image files | Nano Banana Pro / NB2 | `input/episode*_artistname/` |
@@ -30,8 +30,8 @@ Pipeline table
 | 6 | `Wine Agent` | `pd_text_1..3` | `wine1..3`, 2-sentence descriptions | search/reasoning layer, no posting API required | `output/episode*_artistname/wine/` |
 | 7 | `Music / Playlist Agent` | `pd_text_1..3`, `playlist_name`, duration settings | playlist package, track list, playlist redirect, later Spotify URL/QR | Perplexity API for search layer, Spotify API for posting | `output/episode*_artistname/spotify/` |
 | 8 | `Avatar Agent` | `ADNA`, `PD`, wines, playlist data, duration settings | `narrative_pattern_id`, tone path, `mon1..4_draft`, then `mon1..4_final` after API pass | Anthropic API | `output/episode*_artistname/monologues/draft/` and `output/episode*_artistname/monologues/final/` |
-| 9 | stop gate | approved avatar package with `*_final.txt` scripts | `HeyGen status = not_sent` | none | manifest + monologue package |
-| 10 | `HeyGen` execution | approved monologue prompts and avatar mapping | rendered avatar clips | HeyGen API | `output/episode*_artistname/heygen/` |
+| 9 | stop gate | approved avatar package with `*_final.txt` scripts and manual HeyGen prompt handoff | `HeyGen status = prompt_ready_not_sent` | none | manifest + monologue package |
+| 10 | `HeyGen` execution | approved monologue prompts and avatar mapping | rendered avatar clips | manual operator action inside HeyGen UI, supported by HeyGen API references | `output/episode*_artistname/heygen/` |
 | 11 | `Painting QR Agent` | painting redirect URLs | `painting_1_qr..painting_3_qr` | QR generation utility, redirect registry on `evadava.com` | `output/episode*_artistname/qr/` |
 | 12 | `Publisher Agent` | all episode assets and metadata | `videodescription`, publish package, SEO blocks | YouTube-facing prep layer, optional Sheets updates | `output/episode*_artistname/publish/` |
 | 13 | `Render Maker Agent` | paintings, monologues, QR assets, timing, HeyGen clips | final render package / video | ffmpeg / local render stack | `output/episode*_artistname/render/` or final publish path |
@@ -70,6 +70,7 @@ Current API map
 Current stop rule
 
 - For the current workflow, the assistant may go up to `Avatar Agent` outputs and prompt/package preparation.
-- The assistant must stop before sending anything to `HeyGen` until templates are ready inside `hg`.
+- The assistant must stop before sending anything to `HeyGen`; prompt submission is manual until further notice.
 - Only `*_final.txt` monologues may become part of HeyGen prompts.
+- `*_final.txt` monologue filenames must include the chosen `narrative_pattern_name` slug.
 - `*_draft.txt` monologues are not HeyGen-ready.

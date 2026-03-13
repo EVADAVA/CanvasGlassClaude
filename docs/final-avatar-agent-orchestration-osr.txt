@@ -83,10 +83,36 @@ OSR-A18
 AAO must reject outputs that feel over-processed, over-literary, or less human than the underlying template requires.
 
 OSR-A19
-AAO must return either one fully approved monologue set or a structured failure.
+AAO must reject any `*_final.txt` monologue that is not already formatted as a HeyGen-readable script.
+Allowed markup is limited to normal paragraph breaks and approved pause tags such as `<break time="0.3s"/>`, `<break time="0.5s"/>`, and `<break time="0.8s"/>`.
+AAO must reject markdown artifacts, bulleting, wrapper tags, stray placeholders, or decorative markup.
 
 OSR-A20
+AAO must return either one fully approved monologue set or a structured failure.
+
+OSR-A21
 AAO must write the approved pattern package to Google Sheet `Avatar` after successful validation.
+
+OSR-A22
+AAO must enforce the canonical meditation timing flow:
+- `MON1` behaves like the `[00:00]` threshold
+- `MON2` behaves like the `[20:00]` reset
+- `MON3` behaves like the `[40:00]` cathartic deepening
+- `MON4` behaves like the `[60:00]` return
+
+OSR-A23
+AAO must reject monologues that fall outside the intended meditative length envelope unless there is a strong justified exception.
+Default target:
+- `180` to `250` words per monologue
+
+OSR-A24
+AAO must reject `MON2` if it fails to include exactly 2 ADNA sensory/process facts in spoken form.
+
+OSR-A25
+AAO must reject `MON3` if it omits the philosophical anchor or fails to turn that anchor into a real inward movement.
+
+OSR-A26
+AAO must reject `MON4` if it does not bridge the viewer back toward reality before the final prints/originals invitation.
 
 HUMANIZATION RULES
 
@@ -107,6 +133,10 @@ The final voice must preserve warmth, breath, and spoken plausibility even when 
 
 HR-6
 AAO must reject a supposed final pass if it differs from draft only through superficial edits that do not materially improve spoken experience.
+
+HR-7
+AAO must preserve spoken plausibility even when pause tags are present.
+Pause markup must support breath and delivery, not interrupt comprehension.
 
 BRAIDING RULES
 

@@ -44,6 +44,10 @@ def load_json(path: Path) -> dict:
     return json.loads(path.read_text())
 
 
+def fs_slug(text: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]+", "_", text).strip("_").lower() or "pattern"
+
+
 def call_anthropic(api_key: str, system_prompt: str, user_prompt: str) -> str:
     last_error: str | None = None
     for model in ANTHROPIC_MODELS:
@@ -113,11 +117,36 @@ def overlap_ratio(a: str, b: str) -> float:
     return len(a_tokens & b_tokens) / min(len(a_tokens), len(b_tokens))
 
 
+def validate_heygen_markup(mon_key: str, text: str) -> list[str]:
+    issues: list[str] = []
+    if re.search(r"^\s*#+\s", text, flags=re.MULTILINE):
+        issues.append(f"{mon_key}: contains markdown heading markup.")
+    if re.search(r"^\s*[-*]\s+", text, flags=re.MULTILINE):
+        issues.append(f"{mon_key}: contains bullet-list markup.")
+    if "<speak" in text.lower() or "</speak>" in text.lower():
+        issues.append(f"{mon_key}: contains unsupported SSML wrapper tags.")
+    if re.search(r"\[[^\]]+\]", text):
+        issues.append(f"{mon_key}: contains unresolved bracket placeholders.")
+    if re.search(r"</?(?!break\b)[a-zA-Z][^>]*>", text):
+        issues.append(f"{mon_key}: contains unsupported HTML/markup beyond approved break tags.")
+
+    break_tags = re.findall(r"<break\s+time=\"([0-9.]+s)\"\s*/>", text)
+    for value in break_tags:
+        if value not in {"0.3s", "0.5s", "0.8s"}:
+            issues.append(f"{mon_key}: contains non-canonical break tag duration `{value}`.")
+    if re.search(r"(?:<break\s+time=\"(?:0\\.3s|0\\.5s|0\\.8s)\"\s*/>\s*){2,}", text):
+        issues.append(f"{mon_key}: stacks consecutive break tags.")
+    return issues
+
+
 def validate_finals(drafts: dict[str, str], finals: dict[str, str]) -> None:
     issues: list[str] = []
 
     for mon_key, draft_text in drafts.items():
         final_text = finals[mon_key]
+        word_count = len(re.findall(r"[A-Za-z0-9']+", final_text))
+        if word_count < 180 or word_count > 250:
+            issues.append(f"{mon_key}: word count {word_count} is outside the 180-250 range.")
         if normalize_for_comparison(draft_text) == normalize_for_comparison(final_text):
             issues.append(f"{mon_key}: final is identical to draft.")
             continue
@@ -130,6 +159,7 @@ def validate_finals(drafts: dict[str, str], finals: dict[str, str]) -> None:
                 changed_sentences += 1
         if changed_sentences < 1:
             issues.append(f"{mon_key}: finalization is too cosmetic.")
+        issues.extend(validate_heygen_markup(mon_key, final_text))
 
     mon2_sentences = sentence_chunks(finals["mon2"])
     if len(mon2_sentences) >= 4:
@@ -172,6 +202,16 @@ def build_user_prompt(package: dict, manifest: dict) -> str:
     mon2 = read_text(package["draft_monologue_scripts"]["mon2"])
     mon3 = read_text(package["draft_monologue_scripts"]["mon3"])
     mon4 = read_text(package["draft_monologue_scripts"]["mon4"])
+    research_hook = manifest.get("research_hook", "")
+    research_sensory_facts = manifest.get("research_sensory_facts", [])
+    research_philosophy_anchor = manifest.get("research_philosophy_anchor", "")
+    playlist_name = manifest.get("playlist_name", "")
+    duration_1 = manifest.get("duration_1_min", 20)
+    duration_2 = manifest.get("duration_2_min", 20)
+    duration_3 = manifest.get("duration_3_min", 20)
+    total_duration = manifest.get("total_duration_min", 60)
+
+    sensory_block = "\n".join(f"- {item}" for item in research_sensory_facts) if research_sensory_facts else "- [UNSET]"
 
     return f"""
 Episode:
@@ -190,16 +230,22 @@ Tone path:
 - mon4_closing_mode: {package['tone_path']['mon4_closing_mode']}
 
 Session durations:
-- duration_1_min: 20
-- duration_2_min: 20
-- duration_3_min: 20
-- total_duration_min: 60
+- duration_1_min: {duration_1}
+- duration_2_min: {duration_2}
+- duration_3_min: {duration_3}
+- total_duration_min: {total_duration}
 
 Redirects and playlist:
-- playlist_name: {manifest['playlist_name']}
+- playlist_name: {playlist_name}
 - spotify_playlist_url: {manifest['spotify_playlist_url']}
 - playlist_redirect_url: {manifest['redirects']['spotify_playlist']}
 - video_redirect_url: {manifest['redirects']['episode_video']}
+
+Research:
+- research_hook: {research_hook}
+- research_sensory_facts:
+{sensory_block}
+- research_philosophy_anchor: {research_philosophy_anchor}
 
 ADNA:
 {adna_text}
@@ -242,8 +288,8 @@ Task:
 2. Keep the same base narrative pattern across all four.
 3. Make them sound human-spoken, warm, linked, and non-modular.
 4. Preserve required content from draft and upstream materials.
-5. Preserve the artist name in spoken English as Ivan Aivazovsky.
-6. Preserve the playlist name Light After the Tide.
+5. Preserve the artist name in spoken English as {package['artist_name']}.
+6. Preserve the playlist name {playlist_name}.
 7. MON1, MON2, MON3, MON4 must still feel like one authored hour.
 8. Do not produce generic outro language.
 9. Do not mention prompt logic, variables, or OSR.
@@ -252,7 +298,17 @@ Task:
 12. MON2 must not duplicate its own orientation logic. If you include an arc paragraph and a painting-2 paragraph, they must do different jobs.
 13. MON3 must deepen the approach into the third painting. Do not limit MON3 changes to factual cleanup only.
 14. MON4 must sound gathered and human, with gratitude integrated into the closing movement rather than pasted in as a stock thank-you.
-15. Return only the four blocks in this exact format:
+15. Preserve the meditation timing flow: MON1 at [00:00], MON2 at [20:00], MON3 at [40:00], MON4 at [60:00].
+16. Keep each monologue between 180 and 250 words unless a minor exception is clearly necessary.
+17. MON1 must include the research hook or strongest hook fact, breathing entry, painting 1 setup, wine bouquet, and Spotify call.
+18. MON2 must include exactly 2 sensory facts from research_sensory_facts and explain why the painting is a response to the master's work.
+19. MON3 must use research_philosophy_anchor and mention how the wine has evolved in the glass.
+20. MON4 must bridge the viewer gently back to reality and include the final QR-based prints/originals invitation.
+21. Format every final monologue as a HeyGen-readable script.
+22. Use plain spoken text with paragraph breaks where useful.
+23. You may use lightweight pause tags only in this exact form: <break time="0.3s"/>, <break time="0.5s"/>, <break time="0.8s"/>.
+24. Do not use markdown, bullet lists, wrapper tags like <speak>, or unresolved placeholders.
+25. Return only the four blocks in this exact format:
 
 <<<MON1>>>
 [final mon1 text]
@@ -267,6 +323,19 @@ Task:
 [final mon4 text]
 <<<END_MON4>>>
 """.strip()
+
+
+def canonical_final_paths(package: dict) -> dict[str, str]:
+    final_dir = ROOT / "output" / package["episode_slug"] / "monologues" / "final"
+    final_dir.mkdir(parents=True, exist_ok=True)
+    pattern_slug = fs_slug(package["narrative_pattern_name"])
+    episode_slug = package["episode_slug"]
+    return {
+        "mon1": str(final_dir / f"{episode_slug}_{pattern_slug}_painting1_mon1_final.txt"),
+        "mon2": str(final_dir / f"{episode_slug}_{pattern_slug}_painting2_mon2_final.txt"),
+        "mon3": str(final_dir / f"{episode_slug}_{pattern_slug}_painting3_mon3_final.txt"),
+        "mon4": str(final_dir / f"{episode_slug}_{pattern_slug}_mon4_final.txt"),
+    }
 
 
 def write_finals(final_paths: dict[str, str], monologues: dict[str, str]) -> None:
@@ -290,6 +359,7 @@ def build_heygen_prompt_files(package: dict, env: dict[str, str]) -> dict[str, s
         "episode_slug": package["episode_slug"],
         "narrative_pattern_id": package["narrative_pattern_id"],
         "narrative_pattern_name": package["narrative_pattern_name"],
+        "heygen_submission_mode": "manual",
         "heygen_status": "prompt_ready_not_sent",
         "character_type": "talking_photo",
         "talking_photo_id": env.get("HEYGEN_TALKING_PHOTO_ID", ""),
@@ -305,7 +375,8 @@ def build_heygen_prompt_files(package: dict, env: dict[str, str]) -> dict[str, s
 def update_package(package_path: Path, package: dict, heygen_payload: dict[str, str]) -> None:
     package["heygen_prompt_handoff"] = {
         "status": "prompt_ready_not_sent",
-        "note": "Final monologues exist. HeyGen prompts are assembled, but nothing has been sent to HeyGen.",
+        "submission_mode": "manual",
+        "note": "Final monologues exist. HeyGen prompts are assembled for manual submission, but nothing has been sent to HeyGen.",
         "prompt_files": heygen_payload["prompt_files"],
         "handoff_path": heygen_payload["handoff_path"],
     }
@@ -324,6 +395,7 @@ def update_manifest(manifest_path: Path, manifest: dict, package: dict, heygen_p
     manifest["artifacts"]["mon4_final"] = package["final_monologue_scripts"]["mon4"]
     manifest["artifacts"]["heygen_handoff"] = heygen_payload["handoff_path"]
     manifest["avatar_selection"]["heygen_status"] = "prompt_ready_not_sent"
+    manifest["avatar_selection"]["heygen_submission_mode"] = "manual"
     manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
 
 
@@ -427,6 +499,7 @@ def main() -> None:
     monologues = parse_blocks(response)
     drafts = {key: read_text(path) for key, path in package["draft_monologue_scripts"].items()}
     validate_finals(drafts, monologues)
+    package["final_monologue_scripts"] = canonical_final_paths(package)
     write_finals(package["final_monologue_scripts"], monologues)
     heygen_payload = build_heygen_prompt_files(package, env)
     update_package(package_path, package, heygen_payload)
